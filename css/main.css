@@ -1,0 +1,112 @@
+body {
+
+    margin: 0pt;
+
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+
+    width: 100vw;
+    height: 100vh;
+
+
+    font-size: 20pt;
+
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+img {
+    float: left;
+    clear: left;
+}
+
+.movie-item {
+    display: block;
+    float:left;
+    margin: 5pt;
+    margin-left: 20pt;
+    width: 600pt;
+    border-top: 1pt solid black;
+}
+
+.movie-pack {
+
+    diplay: block;
+    float: left;
+    clear: right;
+    width: 380pt;
+}
+
+.movie-title {
+
+    margin: 0pt;
+
+    background-color: black;
+    color: wheat;
+
+    padding: 2pt;
+
+    display: inline-block;
+
+    float:left;
+    clear: left;
+}
+
+.movie-title-line {
+
+    margin: 0pt;
+
+    width: 379pt;
+
+    float:left;
+    clear:left;
+
+}
+
+.movie-summary {
+
+    font-size: 15pt;
+    float:left;
+    clear: left;
+
+
+}
+
+.movie-ratting-imdb {
+
+    float: right;
+    font-size: 24pt;
+    color: slategrey;
+    vertical-align: bottom;
+
+}
+
+.movie-poster {
+
+    float: left;
+    clear: left;
+}
+
+.movie-plot {
+
+    font-size: 14pt;
+    float:left;
+    clear: left;
+    padding: 5pt;
+
+}
+
+.movie-link {
+    font-size: 10pt;
+
+    background-color: goldenrod;
+
+    float: left;
+    clear: right;
+}
+
+.movie-dowloads {
+
+    float: left;
+    clear: right;
+
+    display: inline-block;
+}
