@@ -1,4 +1,4 @@
-RssSummary = function RssSummary(summary) {
+RssSize = function RssSize(summary) {
 
     this.measure = 'GB';
 

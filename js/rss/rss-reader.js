@@ -1,9 +1,9 @@
-require('./data/Movie.js')
-require('./data/Summary.js')
+
+require('./../data/Movie.js')
+require('./../data/RssSize.js')
 
 var FeedParser = require('feedparser');
 var request = require('request'); // for fetching the feed
-var ptn = require('parse-torrent-name')
 
 // rss-tools
 var mapper = require('./rss-mapper.js')
@@ -49,8 +49,10 @@ feedparser.on('readable', function () {
 
         var items = store.get('rss.items', new Object());
 
+        var t = store.getItem(i.guid);
+
         // jeste neni ulozena, je nova
-        if( items['guid' + i.guid] == null || items['guid' + i.guid] == 'new') {
+        if( t == null || items['guid' + i.guid] == 'new') {
 
             var item = i;
 
@@ -58,7 +60,7 @@ feedparser.on('readable', function () {
 
             i["ptn"] = ptn(item.title);
 
-            i["computed"] = new RssSummary(i.summary);
+            i["computed"] = new RssSize(i.summary);
 
             console.log(i.summary + " => " + i.computed);
 

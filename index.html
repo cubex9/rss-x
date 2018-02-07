@@ -17,13 +17,13 @@
 <script type="text/javascript">
     window.$ = window.jQuery = require('./js/libs/jquery-3.2.1.min.js')
 
-    const Store = require('electron-store');
-    const store = new Store();
+    // const Store = require('electron-store');
+    // const store = new Store();
 
     // initialize movie database
-    if( !store.has('movie')) {
-        store.set('movie', new Object())
-    }
+    // if( !store.has('movie')) {
+    //     store.set('movie', new Object())
+    // }
 
     require('./js/rss/rss-reader.js')
 
