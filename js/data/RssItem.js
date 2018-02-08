@@ -52,9 +52,22 @@ RssItem = function RssItem(chan, item) {
     /**
      * if torrent not downloaded, will be, and will have saved to local disk
      *
+     * <pre>
+     *     getTorrent( t => {
+     *          $('#torrentId').html( JSON.toString(t) );
+     *     })
+     * </pre>
      * @return data of torrent file in Json
      */
-    this.getTorrent = function() {
+    this.getTorrent = function( onSuccess ) {
+
+        /* not downloaded yet */
+        if( this.torrent != null ) {
+
+        } else {
+            var t = file.read(__directory, this.torrent);
+            onSuccess(t)
+        }
 
     }
 
