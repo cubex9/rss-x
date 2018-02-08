@@ -1,18 +1,23 @@
 var ptn = require('parse-torrent-name')
 
-RssItem = function RssItem(chan, item) {
-
-    /**
-     * id of rss channel
-     */
-    this.channelId = channel;
+RssItem = function RssItem(serialized) {
 
     /**
      * id of item
      *
      * @type {*|number}
      */
-    this.id = item.guid;
+    this.id = null;
+
+    /**
+     * data from rss
+     */
+    this.origin;
+
+    /**
+     * id of rss channel
+     */
+    this.channelId;
 
     /**
      * movie id
@@ -29,24 +34,50 @@ RssItem = function RssItem(chan, item) {
     /**
      * parsed informations
      */
-    this.parsed = ptn(item.title)
-
-    /**
-     * data from rss
-     */
-    this.rss = item;
+    this.parsed;
 
     /**
      * parsed size
      *
      * @type {RssSize}
      */
-    this.size = new RssSize( item.summary );
+    this.size;
 
     /**
      * path to local file, if was downloaded
      */
     this.torrent;
+
+    if( serialized != null ) {
+
+        this.id = serialized.id;
+        this.origin = serialized.origin;
+        this.channel = serialized.channel;
+        this.movieId = serialized.movieId;
+
+        this.parsed = serialized.parsed;
+        this.size = new RssSize(serialized.size);
+
+        this.status = serialized.status;
+    }
+
+    this.set = function( channel, origin ) {
+
+        this.id = origin.guid;
+        this.origin = origin;
+        this.channel = channel;
+
+        this.parsed = ptn( origin.summary );
+        this.size = new RssSize( origin.summary );
+
+        return this;
+    }
+
+    this.setMovie = function( movie ) {
+        this.movieId = movie.id;
+
+        return this;
+    }
 
 
     /**
