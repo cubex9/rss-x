@@ -1,4 +1,4 @@
-var conf = require('conf')
+var Conf = require('conf')
 
 /**
  * Application configuration
@@ -6,7 +6,7 @@ var conf = require('conf')
  * @param ser serialized configuration
  * @constructor
  */
-class RssModulesConf extends conf {
+class RssModulesConf extends Conf {
 
     constructor(opts) {
         super(opts)
@@ -15,13 +15,19 @@ class RssModulesConf extends conf {
          * db initialization
          */
         var Database = require(`./module/db-${get('db.module', 'nosql')}.js`
-        this.databaseModule = new Database()
+        this.databaseModule = new Database(opts)
 
         /**
          * files initialization
          */
         var Files = require(`./module/files-${get('files.module','local')}.js`)
-        this.filesModule = new Files();
+        this.filesModule = new Files(opts);
+
+        /**
+         * omdb driver
+         */
+        var OmdbDriver = require('./mocule/omdb-api.js')
+        this.omdb = new OmbdDriver(opts)
     }
 
     /**
@@ -40,6 +46,22 @@ class RssModulesConf extends conf {
      */
     get files() {
         return this.filesModule;
+    }
+
+    /**
+     * get the movie service driver
+     *
+     * @returns {OmbdDriver}
+     */
+    get movies() {
+        return this.omdb;
+    }
+
+    /**
+     * get the subtitle service
+     */
+    get subtitles() {
+
     }
 }
 

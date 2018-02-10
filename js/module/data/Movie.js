@@ -1,3 +1,6 @@
+const DataApi = require('./DataApi.js')
+const Item = require('./RssItem.js')
+
 /**
  * clone constructor, where movie is deserialized JSON of Movie
  *
@@ -5,6 +8,80 @@
  * @returns {*|boolean}
  * @constructor
  */
+class Movie extends DataApi {
+
+    constructor(serialized) {
+        super(serialized)
+
+        /* no origin on start */
+        this.omdb = null
+
+        if( serialized != null ) {
+            this.omdb = serialized.omdb
+
+            this.items = new Array()
+            serialized.items.forEach( i => this.items.push( new Item(i)))
+        }
+    }
+
+    get type() {
+        return 'movie'
+    }
+
+    /**
+     * application own id
+     */
+    get id() {
+        return this.omdb.imdbID
+    }
+
+    /**
+     * object with information from omdb
+     *
+     * @type {Object}
+     */
+    get origin() {
+        return this.omdb
+    }
+
+    /**
+     *
+     * @param val {Object}
+     */
+    set origin(val) {
+        this.omdb = val
+    }
+
+
+
+
+
+
+
+    /**
+     * array of rss-items by id
+     *
+     * @type {Object}
+     */
+    this.rss = new Array();
+
+    /**
+     * status can be: active, archived, deleted
+     *
+     * @type {string}
+     */
+    this.status = 'new';
+
+    /**
+     * zero is 'default', smaller has lover priority
+     *
+     * @type {number}
+     */
+    this.priority = 0;
+
+
+}
+
 Movie = function Movie(serialized) {
 
     /**

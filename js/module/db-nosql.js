@@ -1,35 +1,79 @@
-//
-var DB = require('nosql');
-var nosql = DB.load('./rss-x.nosql');
+const DbApi = require('./api/db.js')
+const DB = require('nosql')
 
-module.exports = function() {
+const RssItem = require('./data/RssItem.js')
+const Movie = require('./data/Movie.js')
 
-    this.getMovie = function(id) {
-        return nosql.get('movie.'+id)
+class NosqlDatabase extends DbApi {
+
+    constructor(conf) {
+        super()
+
+        this.db = DB.load(conf.db.path)
     }
 
-    this.setMovie = function(movie) {
-        nosql.set('movie.'+movie.id,movie);
-
-        return this;
-    }
-
-    this.getItem = function(id) {
-        return nosql.get('item.' + id);
-    }
-
-    this.setItem = function(item) {
-        nosql.set('item.' + item.id, item);
-
-        return this;
-    }
-
-    this.getMovieItems = function(movie) {
-        nosql.search( (b) => {
-
-            b.where( id, eq, movie.id )
-            return b;
+    /**
+     * get item by id
+     *
+     * @param id
+     * @return item
+     */
+    itemById(id) {
+        const data = this.db.get('item.'+id)
+        if( data != null ) {
+            return new RssItem(data)
         }
+
+        return null;
     }
+
+    /**
+     * get movie by id
+     *
+     * @param id
+     * @return movie
+     */
+    movieById(id) {
+        const data = this.db.get('movie.'+id)
+        if( data != null ) {
+            return new Movie(data);
+        }
+
+        return null;
+    }
+
+    /**
+     * search movie by Name and Year
+     */
+    movieByTy(title,year) {
+
+    }
+
+    /**
+     * set item to db
+     *
+     * @param item
+     */
+    insertItem(i) {
+        this.db.set('item.'+i.id,i)
+    }
+
+    insertMovie(m) {
+        this.db.set('movie.'+m.id,m);
+    }
+
+    /**
+     * set movie to db
+     *
+     * @param movie
+     */
+    updateMovie(movie) {
+
+    }
+
+    updateMovie(movie) {}
 }
+
+module.exports = NosqlDatabase
+
 

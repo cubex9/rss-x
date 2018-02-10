@@ -1,5 +1,6 @@
 /**
- * Genreral Db Api of application
+ * Genereral Db Api of application,
+ * database must be synchronized.
  *
  * @author kubasekA
  */
@@ -12,27 +13,40 @@ class DatabaseApi {
      * get item by id
      *
      * @param id
+     * @return item
      */
-    getItem(id) {
+    itemById(id) {
     }
 
     /**
      * get movie by id
      *
      * @param id
+     * @return movie
      */
-    getMovie(id) {
+    movieById(id) {
     }
 
     /**
+     * set item to db
      *
      * @param item
      */
-    setItem(item) {
+    insertItem(item) {
     }
 
-    setMovie(movie) {
+    updateItem(item) {
     }
+
+    /**
+     * set movie to db
+     *
+     * @param movie
+     */
+    insertMovie(movie) {
+    }
+
+    updateMovie(movie) {}
 
 }
 

@@ -7,8 +7,11 @@
  */
 class ResolverApi {
 
-    constructor(opts) {
-        this.conf = opts.conf;
+    constructor(opts, onRender, onError) {
+        this.conf = opts.conf
+
+        this.render = onRender
+        this.error = onError;
     }
 
     /**
@@ -34,23 +37,40 @@ class ResolverApi {
      */
     resolve(item) {
 
-        var t = convert(item);
+        var t = this.convert(item);
 
-        var stored = this.conf.db.getItem(item.id)
+        if( !this.conf.db.itemExits(t.id)) {
 
-        if( stored == null ) {
+            this.conf.db.movieByItem(t,
+                (m) => {
+                    m.addItem(t)
+                    this.conf.db.updateMovie(m)
+                },
+                () => conf.omdb.get(t.title, t.year,
+                    // sync ?
+                    (m) => {
+                        var movie = new Movie(m);
 
-            /* search movie */
-            var movie = this.conf.db.movieByItem(t);
-
-            if( movie == null ) {
-
-                /* try search movie in omdb */
-                var ombd = this.conf.search.movieByItem(t)
-            }
-
-
+                        movie.addItem(t);
+                        this.db.insertMovie(m);
+                    }
+                )
+            )
         }
+    }
+
+    private resolvedMovie(m, i) {
+        m.addItem(i);
+
+        this.onRender(m);
+    }
+
+    onRender(movie) {
+        this.render.movie(movie);
+    }
+
+    onError(item) {
+        this.error(item)
     }
 }
 
