@@ -1,5 +1,40 @@
-var store = require('./../modules/db-driver.js')
+const Database = require(`./../${conf.db}`)
 
+
+class EttvResolver extends ApiResolver {
+
+    constructor(ch) {
+        super(ch)
+
+        this.db = new Database();
+        this.channel = ch;
+    }
+
+    /**
+     *
+     * @param item
+     */
+    resolve(item) {
+
+        var t = this.db.getItem(item.guid)
+
+        if( t == null ) {
+
+            t = convert(item);
+        }
+
+    }
+
+    /**
+     * converze source entity from RSS chanel to RssItem
+     *
+     * @param item
+     */
+    private convert(item) {
+
+
+    }
+}
 /**
  *
  * @param ch channel

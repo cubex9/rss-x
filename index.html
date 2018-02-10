@@ -17,6 +17,10 @@
 <script type="text/javascript">
     window.$ = window.jQuery = require('jquery')
 
+    var Conf = require('./js/RssModulesConf.js')
+    const conf = new Conf();
+
+
     // this is form data to html
     var r = require('./js/rss/rss-renderer.js');
 
