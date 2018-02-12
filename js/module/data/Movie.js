@@ -1,27 +1,40 @@
-const DataApi = require('./DataApi.js')
-const Item = require('./RssItem.js')
+const DApi = require('./DApi.js')
 
 /**
  * clone constructor, where movie is deserialized JSON of Movie
  *
- * @param movie
+ * @param serialized and deserialized JSON.object
  * @returns {*|boolean}
  * @constructor
  */
-class Movie extends DataApi {
+class Movie extends DApi {
 
     constructor(serialized) {
         super(serialized)
 
         /* no origin on start */
-        this.omdb = null
+        this.origin = null
+
+        /* on create */
+        this.status = 'new'
+
+        /* priority on start is default */
+        this.priority = 0
 
         if( serialized != null ) {
-            this.omdb = serialized.omdb
-
-            this.items = new Array()
-            serialized.items.forEach( i => this.items.push( new Item(i)))
+            this.origin = serialized.origin
+            this.status = serialized.status
+            this.priority = serialized.priority
         }
+    }
+
+    /**
+     * create movie from omdb
+     * @param data
+     * @returns {Movie}
+     */
+    static fromOmdb(omdb) {
+        return new Movie({ origin : data, status : 'new', priority : 0})
     }
 
     get type() {
@@ -32,137 +45,22 @@ class Movie extends DataApi {
      * application own id
      */
     get id() {
-        return this.omdb.imdbID
+        return this.origin.imdbID
     }
 
     /**
-     * object with information from omdb
-     *
-     * @type {Object}
+     * title of the movie
      */
-    get origin() {
-        return this.omdb
+    get title() {
+        return this.origin.Title;
     }
 
     /**
-     *
-     * @param val {Object}
+     * release year
      */
-    set origin(val) {
-        this.omdb = val
-    }
-
-
-
-
-
-
-
-    /**
-     * array of rss-items by id
-     *
-     * @type {Object}
-     */
-    this.rss = new Array();
-
-    /**
-     * status can be: active, archived, deleted
-     *
-     * @type {string}
-     */
-    this.status = 'new';
-
-    /**
-     * zero is 'default', smaller has lover priority
-     *
-     * @type {number}
-     */
-    this.priority = 0;
-
-
-}
-
-Movie = function Movie(serialized) {
-
-    /**
-     * application own id
-     */
-    this.id = null;
-
-    /**
-     * object with information from omdb
-     *
-     * @type {Object}
-     */
-    this.origin = new Object()
-
-    /**
-     * array of rss-items by id
-     *
-     * @type {Object}
-     */
-    this.rss = new Array();
-
-    /**
-     * status can be: active, archived, deleted
-     *
-     * @type {string}
-     */
-    this.status = 'new';
-
-    /**
-     * zero is 'default', smaller has lover priority
-     *
-     * @type {number}
-     */
-    this.priority = 0;
-
-    /**
-     * fill inner with serialized data
-     */
-    if (movie != null) {
-        this.origin = serialized.origin;
-        this.rss = serialized.rss;
-        this.status = serialized.status;
-        this.priority = serialized.priority;
-
-        /**
-         * as it we use IMBd Id ( tt12345678 )
-         */
-        this.id = serialized.origin.imdbID;
-    }
-
-    /**
-     * set origin, source from omdb.com
-     *
-     * @param origin
-     */
-    this.set = function(origin) {
-        this.origin = origin;
-    }
-
-    /**
-     * get original omdb data
-     *
-     * @returns {*}
-     */
-    this.get = function() {
-        return origin;
-    }
-
-    /**
-     * add link to rss item
-     * @param item
-     */
-    this.addItem = function(item) {
-        this.rss.push(item.id);
-    }
-
-    this.listItems = function() {
-        return rss;
-    }
-
-    this.hasItem = function(id) {
-        return rss.contains(id);
+    get year() {
+        return this.origin.Year;
     }
 }
+
+module.exports = Movie

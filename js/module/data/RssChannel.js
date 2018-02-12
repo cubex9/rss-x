@@ -1,56 +1,66 @@
+const DApi = require('./DApi.js')
+
 /**
  * rss channel description
  *
  * @type {RssChannel}
  */
-RssChannel = new function RssChannel(serialized) {
+class RssChannel extends DApi {
 
-    /**
-     * id of channel, it's application own property
-     */
-    this.id;
+    constructor(serialized) {
+        super(serialized)
 
-    /**
-     * uri for dowload new items
-     */
-    this.rssUri;
+        /**
+         * channel id is not numeris, is short name or nick like: 'ettv', 'pyrate-bay', 'kick-ass' ...
+         *
+         * @type {null}
+         */
+        this.id = null
 
-    /**
-     * html page of channel
-     */
-    this.web;
+        /**
+         * uri for dowload new items
+         */
+        this.rssUri;
 
-    /**
-     * last update, it is mean: when we read last time
-     */
-    this.update;
+        /**
+         * html page of channel
+         */
+        this.web;
 
-    /**
-     * channel name
-     */
-    this.name;
+        /**
+         * last update, it is mean: when we read last time
+         */
+        this.update;
 
-    /**
-     * search in channel rss provider
-     */
-    this.search;
+        /**
+         * channel name
+         */
+        this.name;
 
-    /**
-     * reader
-     */
-    this.reader;
+        /**
+         * search in channel rss provider
+         */
+        this.search;
 
+        /**
+         * reader
+         */
+        this.reader;
 
-    if( serialized != null ) {
+        if( serialized != null ) {
+            this.id = serialized.id;
+            this.rssUri = serialized.rssUri;
+            this.web = serialized.web;
+            this.update = serialized.update;
+            this.name = serialized.name;
 
-        this.id = serialized.id;
-        this.rssUri = serialized.rssUri;
-        this.web = serialized.web;
-        this.update = serialized.update;
-        this.name = serialized.name;
+            /* plug-ins */
+            this.reader = serialized.reader;
+            this.search = serialized.search;
+        }
+    }
 
-        /* plug-ins */
-        this.reader = serialized.reader;
-        this.search = serialized.search;
+    get type() {
+        return 'channel'
     }
 }

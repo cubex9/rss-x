@@ -7,13 +7,14 @@ class DataApi {
     }
 
     get type() {
-
+        throw Error("Type must be overriden")
     }
 
     get id() {
-
+        throw Error("Id must be overriden")
     }
 
     set id(val) {
+        throw Error("Set Id must be overriden")
     }
 }

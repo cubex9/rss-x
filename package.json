@@ -19,6 +19,8 @@
     "parse-torrent": "^5.8.3",
     "parse-torrent-name": "^0.5.4",
     "request": "^2.83.0",
+    "then-request": "^5.0.0",
+    "threads": "^0.10.1",
     "webtorrent": "^0.98.21"
   }
 }

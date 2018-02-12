@@ -10,43 +10,56 @@ class NosqlDatabase extends DbApi {
         super()
 
         this.db = DB.load(conf.db.path)
+
+        /* create movie view */
+        this.db.view('movie').make((b) => {
+            b.where('type', 'movie')
+            b.sort('year')
+        });
+
+        /* create item view */
+        this.db.view('item').make((b) => {
+            b.where('type', 'item')
+            b.sort('year')
+        });
     }
 
     /**
-     * get item by id
+     * get movie view
+     * <pre>
+     *      db.movie.search('id',1).callback((err,res) => {
+     *          if( !err) {
+     *              console.log(res)
+     *          }
+     *      })
+     * </pre>
+     */
+    get movie() {
+        return this.db.find('movie')
+    }
+
+    /**
+     * get movie view
+     * <pre>
+     *      db.item.search('id',1).callback((err,res) => {
+     *          if( !err) {
+     *              console.log(res)
+     *          }
+     *      })
+     * </pre>
+     */
+    get item() {
+        return this.db.find('item')
+    }
+
+    /**
+     * get the movie items
      *
-     * @param id
-     * @return item
+     * @param movie
+     * @param callback
      */
-    itemById(id) {
-        const data = this.db.get('item.'+id)
-        if( data != null ) {
-            return new RssItem(data)
-        }
-
-        return null;
-    }
-
-    /**
-     * get movie by id
-     *
-     * @param id
-     * @return movie
-     */
-    movieById(id) {
-        const data = this.db.get('movie.'+id)
-        if( data != null ) {
-            return new Movie(data);
-        }
-
-        return null;
-    }
-
-    /**
-     * search movie by Name and Year
-     */
-    movieByTy(title,year) {
-
+    itemsOfMovie(movie,callback) {
+        return this.items.search('movie',movie.id).callback(callback)
     }
 
     /**
@@ -55,11 +68,11 @@ class NosqlDatabase extends DbApi {
      * @param item
      */
     insertItem(i) {
-        this.db.set('item.'+i.id,i)
+        this.db.insert(i)
     }
 
     insertMovie(m) {
-        this.db.set('movie.'+m.id,m);
+        this.db.insert(m)
     }
 
     /**
@@ -69,9 +82,27 @@ class NosqlDatabase extends DbApi {
      */
     updateMovie(movie) {
 
+        this.db.update(movie).make((b) => {
+            b.where('type','movie')
+            b.where('id', movie.id);
+            b.callback((err, count) => console.log('updated movie id:', movie.id))
+        })
     }
 
-    updateMovie(movie) {}
+    /**
+     * update item
+     *
+     * @param movie
+     */
+    updateItem(movie) {
+
+        this.db.update(movie).make((b) => {
+            b.where('type', 'item')
+            b.where('id', item.id)
+            b.callback((err, count) => console.log('updated item id:', item.id))
+
+        })
+    }
 }
 
 module.exports = NosqlDatabase

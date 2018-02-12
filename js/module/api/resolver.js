@@ -7,11 +7,12 @@
  */
 class ResolverApi {
 
-    constructor(opts, onRender, onError) {
-        this.conf = opts.conf
+    constructor({ conf, onInsertMovie, onInsertItem, onError}) {
+        this.conf = conf
 
-        this.render = onRender
-        this.error = onError;
+        this.onInsertMovie = onInsertMovie
+        this.onInsertItem = onInsertItem
+        this.onError = onError;
     }
 
     /**
@@ -30,6 +31,15 @@ class ResolverApi {
         throw new Error('Resolver.convert must be override')
     }
 
+    getMovie(t,callback) {
+        this.conf.movies(t,callback)
+
+    }
+
+    get db() {
+        this.conf.db
+    }
+
     /**
      * resolve item in channel
      *
@@ -37,40 +47,58 @@ class ResolverApi {
      */
     resolve(item) {
 
-        var t = this.convert(item);
+        /* new item */
+        var t = this.convert(item)
 
-        if( !this.conf.db.itemExits(t.id)) {
+        this.db.item.search('id',t.id).callback((e,r) => {
 
-            this.conf.db.movieByItem(t,
-                (m) => {
-                    m.addItem(t)
-                    this.conf.db.updateMovie(m)
-                },
-                () => conf.omdb.get(t.title, t.year,
-                    // sync ?
-                    (m) => {
-                        var movie = new Movie(m);
+            // when item is new, must be inserted into db
+            if(e) {
+                this.db.insertItem(t);
 
-                        movie.addItem(t);
-                        this.db.insertMovie(m);
-                    }
-                )
-            )
-        }
-    }
+                // try check movie in db
+                this.db.movie.search((b) => {
 
-    private resolvedMovie(m, i) {
-        m.addItem(i);
+                    b.where('title',t.title)
+                    b.where('year', t.year)
+                    b.callback((e,r) => {
 
-        this.onRender(m);
-    }
+                        /* yes, movie exist, set movie to item and update him */
+                        if(!e) {
 
-    onRender(movie) {
-        this.render.movie(movie);
-    }
+                            const m = Movie.fromJson(r)
+                            t.movie = m.id
 
-    onError(item) {
-        this.error(item)
+                            this.db.updateItem(t)
+
+                            // now can call result
+                            this.onInsertItem(m,t)
+
+                        } else {
+
+                            /* movie does not exist, check him from omdb */
+                            this.conf.movies.get(t, (e,r) => {
+                                if( !e) {
+
+                                    const m = Movie.ofOmdb(r)
+                                    this.db.insertMovie(m)
+
+                                    t.movie = movie.id
+                                    this.db.updateItem(t)
+
+                                    this.onInsertMovie(m)
+                                    this.onInsertItem(m,t)
+                                } else {
+                                    // TODO: make onError call -> unresolved item
+                                }
+                            })
+                        }
+                    })
+                })
+            } else {
+                console.log(e);
+            }
+        })
     }
 }
 
