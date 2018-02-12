@@ -64,3 +64,5 @@ class RssChannel extends DApi {
         return 'channel'
     }
 }
+
+module.exporst = RssChannel
