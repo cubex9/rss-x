@@ -89,7 +89,7 @@ class Resolver {
         const m = Movie.fromJson(r)
         t.movie = m.id
 
-        this.db.updateItem(t)
+        this.db.update(t,{ movie: m.id })
 
         // now can call result
         this.onInsertItem(m,t)
@@ -106,11 +106,11 @@ class Resolver {
         this.conf.movies.get(t, (e,r) => {
             if(!e) {
 
-                const m = Movie.ofOmdb(r)
+                const m = Movie.fromOmdb(r)
                 this.db.insertMovie(m)
 
                 t.movie = movie.id
-                this.db.updateItem(t)
+                this.db.update(t,{ movie : m.id })
 
                 this.onInsertMovie(m)
                 this.onInsertItem(m,t)

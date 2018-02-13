@@ -33,7 +33,7 @@ class Movie extends DApi {
      * @param data
      * @returns {Movie}
      */
-    static fromOmdb(omdb) {
+    static fromOmdb(data) {
         return new Movie({ origin : data, status : 'new', priority : 0})
     }
 

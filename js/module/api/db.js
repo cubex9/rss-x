@@ -2,6 +2,8 @@
  * Genereral Db Api of application,
  * database must be synchronized.
  *
+ * All data entries must implement DApi
+ *
  * @author kubasekA
  */
 class DatabaseApi {
@@ -48,7 +50,15 @@ class DatabaseApi {
 
     updateMovie(movie) {}
 
+    /**
+     * update db entry with data
+     */
+    update( entry, data ) {
+        throw new Error('Must be overriden.')
+    }
 }
+
+
 
 module.exports = DatabaseApi()
 

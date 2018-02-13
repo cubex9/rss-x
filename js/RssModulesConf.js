@@ -61,7 +61,7 @@ class RssModulesConf extends Conf {
      * get the subtitle service
      */
     get subtitles() {
-
+        throw new Error("Not implemented yet.")
     }
 }
 

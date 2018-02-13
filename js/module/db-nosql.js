@@ -78,50 +78,20 @@ class NosqlDatabase extends DbApi {
     }
 
     /**
-     * update movie in db
+     * Update database entry by data
      *
-     * @param movie
+     * @param entry db entry which must have { type: '', id: }
+     * @param data
      */
-    updateMovie(movie) {
+    update( entry, data ) {
 
-        this.db.update(movie).make((b) => {
-            b.where('type','movie')
-            b.where('id', movie.id);
-            b.callback((err, count) =>
-                console.log('updated movie id:', movie.id)
-            )
-        })
-    }
+        this.db.update(data).make( b => {
 
-    /**
-     * update specific data in movie on db
-     *
-     * @param id of movie
-     * @param data { status: 'archived', ... } for example
-     */
-    updateMovie(id, data) {
+            b.where('type', dapi.type)
+            b.where('id', dapi.id)
 
-        this.db.update(data).make((b) => {
-            b.where('type','movie')
-            b.where('id', id);
-            b.callback((err, count) =>
-                console.log('updated movie id:', movie.id)
-            )
-        })
-    }
-
-    /**
-     * update item
-     *
-     * @param movie
-     */
-    updateItem(movie) {
-
-        this.db.update(movie).make((b) => {
-            b.where('type', 'item')
-            b.where('id', item.id)
-            b.callback((err, count) =>
-                console.log('updated item id:', item.id)
+            b.callback( (err,count) =>
+                console.log(`Entry ${dapi.id} was update by: ${JSON.stringify(data)}.`)
             )
         })
     }

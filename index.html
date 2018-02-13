@@ -17,23 +17,27 @@
 <script type="text/javascript">
     window.$ = window.jQuery = require('jquery')
 
-    var Conf = require('./js/RssModulesConf.js')
-    const conf = new Conf();
+    // var Conf = require('./js/RssModulesConf.js')
+    // const conf = new Conf();
+    //
+    //
+    // // this is form data to html
+    // var r = require('./js/rss/rss-renderer.js');
+    //
+    // var store = require('./js/modules/db-driver.js');
+    //
+    // // render actual db
+    // store.movies('active', m => r.movie(m));
+    //
+    // // channel reader
+    // var Reader = require('./js/rss/rss-reader.js');
+    //
+    // // nactene kanaly se rosolvuji a rovnou se promitaji pomoci renderedu do stranky
+    // store.channels('active', ch => new Reader(ch,r));
+
+    const nosql = require('nosql')
 
 
-    // this is form data to html
-    var r = require('./js/rss/rss-renderer.js');
-
-    var store = require('./js/modules/db-driver.js');
-
-    // render actual db
-    store.movies('active', m => r.movie(m));
-
-    // channel reader
-    var Reader = require('./js/rss/rss-reader.js');
-
-    // nactene kanaly se rosolvuji a rovnou se promitaji pomoci renderedu do stranky
-    store.channels('active', ch => new Reader(ch,r));
 
 </script>
 </body>

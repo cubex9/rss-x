@@ -44,15 +44,15 @@ class RssItem extends DApi {
     }
 
     /**
-     * komplete name of item
+     * torrent title
      */
-    get summary() {
-    }
-
     get title() {
         throw Error("Title mus be overriden")
     }
 
+    /**
+     * movie release
+     */
     get year() {
         throw Error("Year mus be overriden")
     }

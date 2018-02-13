@@ -33,15 +33,11 @@ class EttvItem extends RssItem {
     }
 
     get id() {
-        return this.rss.guid
+        return this.channel + '.' + this.rss.guid
     }
 
     get channel() {
         return 'ettv'
-    }
-
-    get summary() {
-        return this.rss.summary
     }
 
     get title() {
@@ -55,7 +51,6 @@ class EttvItem extends RssItem {
     get group() {
         return this.parsed.group
     }
-
 
     get link() {
         return this.rss.link
