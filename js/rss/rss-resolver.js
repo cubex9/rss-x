@@ -1,28 +1,10 @@
 const Database = require(`./../${conf.db}`)
+const Resolver = require(`./../module/api/resolver.js`)
 
+class EttvResolver extends Resolver {
 
-class EttvResolver extends ApiResolver {
-
-    constructor(ch) {
-        super(ch)
-
-        this.db = new Database();
-        this.channel = ch;
-    }
-
-    /**
-     * resi veci kolem
-     * @param item
-     */
-    resolve(item) {
-
-        var t = this.db.getItem(item.guid)
-
-        if( t == null ) {
-
-            t = convert(item);
-        }
-
+    constructor({conf, onInsertMovie, onInsertItem, onError}) {
+        super({conf, onInsertMovie, onInsertItem, onError})
     }
 
     /**
@@ -31,8 +13,7 @@ class EttvResolver extends ApiResolver {
      * @param item
      */
     private convert(item) {
-
-
+        return EttvItem.fromRss(item);
     }
 }
 // /**

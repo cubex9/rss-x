@@ -15,6 +15,11 @@ var magnet = require('./../modules/magnet-link.js')
 
 
 var req = request('https://www.ettv.tv/rss.php?cat=1,2,3,42,47,49')
+
+// pirates: https://thepiratebay.org/rss//top100/200
+// https://thepiratebay.org/rss//top100/500
+
+
 var feedparser = new FeedParser();
 
 

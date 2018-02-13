@@ -1,11 +1,11 @@
 'use strict'
 
 /**
- * ResolverApi is general resolving module api.
+ * ResolverApi is general item/movie resolving module api.
  *
  * @author kubasekA
  */
-class ResolverApi {
+class Resolver {
 
     constructor({ conf, onInsertMovie, onInsertItem, onError}) {
         this.conf = conf
@@ -41,7 +41,7 @@ class ResolverApi {
     }
 
     /**
-     * resolve item in channel
+     * resolve one item from channel
      *
      * @param item
      */
@@ -50,53 +50,72 @@ class ResolverApi {
         /* new item */
         var t = this.convert(item)
 
-        this.db.item.search('id',t.id).callback((e,r) => {
+        this.db.item.one('id',t.id).callback((e,r) => {
 
             // when item is new, must be inserted into db
             if(e) {
                 this.db.insertItem(t);
 
                 // try check movie in db
-                this.db.movie.search((b) => {
+                this.db.movie.one((b) => {
 
                     b.where('title',t.title)
                     b.where('year', t.year)
+
                     b.callback((e,r) => {
 
                         /* yes, movie exist, set movie to item and update him */
                         if(!e) {
-
-                            const m = Movie.fromJson(r)
-                            t.movie = m.id
-
-                            this.db.updateItem(t)
-
-                            // now can call result
-                            this.onInsertItem(m,t)
-
+                            this.resolveExistMovie(t,r)
                         } else {
-
-                            /* movie does not exist, check him from omdb */
-                            this.conf.movies.get(t, (e,r) => {
-                                if( !e) {
-
-                                    const m = Movie.ofOmdb(r)
-                                    this.db.insertMovie(m)
-
-                                    t.movie = movie.id
-                                    this.db.updateItem(t)
-
-                                    this.onInsertMovie(m)
-                                    this.onInsertItem(m,t)
-                                } else {
-                                    // TODO: make onError call -> unresolved item
-                                }
-                            })
+                            this.resolveNewMovie(t);
                         }
                     })
                 })
             } else {
                 console.log(e);
+            }
+        })
+    }
+
+    /**
+     * resolve movie from db
+     *
+     * @param t item
+     * @param r result from db search
+     */
+    resolveExistMovie(t,r) {
+
+        const m = Movie.fromJson(r)
+        t.movie = m.id
+
+        this.db.updateItem(t)
+
+        // now can call result
+        this.onInsertItem(m,t)
+
+    }
+
+    /**
+     * get the movie by item from omdb
+     * @param t item
+     */
+    resolveNewMovie(t) {
+
+        /* movie does not exist, check him from omdb */
+        this.conf.movies.get(t, (e,r) => {
+            if(!e) {
+
+                const m = Movie.ofOmdb(r)
+                this.db.insertMovie(m)
+
+                t.movie = movie.id
+                this.db.updateItem(t)
+
+                this.onInsertMovie(m)
+                this.onInsertItem(m,t)
+            } else {
+                // TODO: make onError call -> unresolved item
             }
         })
     }

@@ -68,15 +68,17 @@ class NosqlDatabase extends DbApi {
      * @param item
      */
     insertItem(i) {
+        // TODO: unigue
         this.db.insert(i)
     }
 
     insertMovie(m) {
+        // TODO: unique
         this.db.insert(m)
     }
 
     /**
-     * set movie to db
+     * update movie in db
      *
      * @param movie
      */
@@ -85,7 +87,26 @@ class NosqlDatabase extends DbApi {
         this.db.update(movie).make((b) => {
             b.where('type','movie')
             b.where('id', movie.id);
-            b.callback((err, count) => console.log('updated movie id:', movie.id))
+            b.callback((err, count) =>
+                console.log('updated movie id:', movie.id)
+            )
+        })
+    }
+
+    /**
+     * update specific data in movie on db
+     *
+     * @param id of movie
+     * @param data { status: 'archived', ... } for example
+     */
+    updateMovie(id, data) {
+
+        this.db.update(data).make((b) => {
+            b.where('type','movie')
+            b.where('id', id);
+            b.callback((err, count) =>
+                console.log('updated movie id:', movie.id)
+            )
         })
     }
 
@@ -99,8 +120,9 @@ class NosqlDatabase extends DbApi {
         this.db.update(movie).make((b) => {
             b.where('type', 'item')
             b.where('id', item.id)
-            b.callback((err, count) => console.log('updated item id:', item.id))
-
+            b.callback((err, count) =>
+                console.log('updated item id:', item.id)
+            )
         })
     }
 }
