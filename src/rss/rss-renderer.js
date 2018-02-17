@@ -1,6 +1,5 @@
-module.exports = function(m) {
-
-    return  `<div class="movie-item" id="${m.omdb.imdbID}">
+module.exports = function (m) {
+    return `<div class="movie-item" id="${m.omdb.imdbID}">
                 <div class="movie-poster">
                     <img src="${m.omdb.Poster}" width="160pt" border="8pt solid black" />
                 </div> 
@@ -15,7 +14,6 @@ module.exports = function(m) {
                 </div>
             </div>`
 }
-
 
 // <a href="magnet:?dn=${item.magnet}" class="movie-link">
 //     <img src="pic/download.png" width="24pt" />

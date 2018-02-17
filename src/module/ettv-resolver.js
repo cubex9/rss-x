@@ -1,9 +1,12 @@
-const Database = require(`./../${conf.db}`)
-const Resolver = require(`./../module/api/resolver.js`)
+const Resolver = require('./api/resolver.js')
+const EttvItem = require('./data/EttvItem.js')
 
+/**
+ * Resolving specialites of ETTV channel
+ * @author kubasekA
+ */
 class EttvResolver extends Resolver {
-
-    constructor({conf, onInsertMovie, onInsertItem, onError}) {
+    constructor ({conf, onInsertMovie, onInsertItem, onError}) {
         super({conf, onInsertMovie, onInsertItem, onError})
     }
 
@@ -12,10 +15,12 @@ class EttvResolver extends Resolver {
      *
      * @param item
      */
-    private convert(item) {
-        return EttvItem.fromRss(item);
+    convert (item) {
+        return EttvItem.fromRss(item)
     }
 }
+
+module.export = EttvResolver
 // /**
 //  *
 //  * @param ch channel

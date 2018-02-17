@@ -1,108 +1,103 @@
 
-require('./../data/Movie.js')
-require('./../data/RssSize.js')
+// require('./../data/Movie.js')
+// require('./../data/RssSize.js')
 
-var FeedParser = require('feedparser');
-var request = require('request'); // for fetching the feed
+// var FeedParser = require('feedparser');
+// var request = require('request'); // for fetching the feed
 
-// rss-tools
-var mapper = require('./rss-mapper.js')
-var filter = require('./rss-filter.js')
+// // rss-tools
+// var mapper = require('./rss-mapper.js')
+// var filter = require('./rss-filter.js')
 
-// in-app-modules
-var omdb = require('./../modules/omdb-api.js')
-var magnet = require('./../modules/magnet-link.js')
+// // in-app-modules
+// var omdb = require('./../modules/omdb-api.js')
+// var magnet = require('./../modules/magnet-link.js')
 
+// var req = request('https://www.ettv.tv/rss.php?cat=1,2,3,42,47,49')
 
-var req = request('https://www.ettv.tv/rss.php?cat=1,2,3,42,47,49')
+// // pirates: https://thepiratebay.org/rss//top100/200
+// // https://thepiratebay.org/rss//top100/500
 
-// pirates: https://thepiratebay.org/rss//top100/200
-// https://thepiratebay.org/rss//top100/500
+// var feedparser = new FeedParser();
 
+// req.on('error', function (error) {
+//     // handle any request errors
+// });
 
-var feedparser = new FeedParser();
+// req.on('response', function (res) {
+//     var stream = this; // `this` is `req`, which is a stream
 
+//     if (res.statusCode !== 200) {
+//         this.emit('error', new Error('Bad status code'));
+//     }
+//     else {
+//         stream.pipe(feedparser);
+//     }
+// });
 
-req.on('error', function (error) {
-    // handle any request errors
-});
+// feedparser.on('error', function (error) {
+//     // always handle errors
+// });
 
-req.on('response', function (res) {
-    var stream = this; // `this` is `req`, which is a stream
+// feedparser.on('readable', function () {
+//     // This is where the action is!
+//     var stream = this; // `this` is `feedparser`, which is a stream
+//     var meta = this.meta; // **NOTE** the "meta" is always available in the context of the feedparser instance
+//     var i;
 
-    if (res.statusCode !== 200) {
-        this.emit('error', new Error('Bad status code'));
-    }
-    else {
-        stream.pipe(feedparser);
-    }
-});
+//     while ( i = stream.read()) {
 
-feedparser.on('error', function (error) {
-    // always handle errors
-});
+//         console.log(i);
 
-feedparser.on('readable', function () {
-    // This is where the action is!
-    var stream = this; // `this` is `feedparser`, which is a stream
-    var meta = this.meta; // **NOTE** the "meta" is always available in the context of the feedparser instance
-    var i;
+//         var items = store.get('rss.items', new Object());
 
-    while ( i = stream.read()) {
+//         var t = store.getItem(i.guid);
 
-        console.log(i);
+//         // jeste neni ulozena, je nova
+//         if( t == null || items['guid' + i.guid] == 'new') {
 
-        var items = store.get('rss.items', new Object());
+//             var item = i;
 
-        var t = store.getItem(i.guid);
+//             items['guid' + i.guid] = 'new';
 
-        // jeste neni ulozena, je nova
-        if( t == null || items['guid' + i.guid] == 'new') {
+//             i["ptn"] = ptn(item.title);
 
-            var item = i;
+//             i["computed"] = new RssSize(i.summary);
 
-            items['guid' + i.guid] = 'new';
+//             console.log(i.summary + " => " + i.computed);
 
-            i["ptn"] = ptn(item.title);
+//             if (filter(i)) {
 
-            i["computed"] = new RssSize(i.summary);
+//                 omdb(item.ptn.title, item.ptn.year,
+//                     o => {
 
-            console.log(i.summary + " => " + i.computed);
+//                         console.log(o);
 
-            if (filter(i)) {
+//                         // save data, if movie exist, only append new source.guid
+//                         var movie = new Movie(store.get('movie.' + o.imdbID,null));
 
-                omdb(item.ptn.title, item.ptn.year,
-                    o => {
+//                         movie.omdb = o;
+//                         movie.addRss(item);
 
-                        console.log(o);
+//                         if($('#'+o.imdbID).length == 0) {
+//                             $('#rss').append(mapper(movie));
+//                         }
 
-                        // save data, if movie exist, only append new source.guid
-                        var movie = new Movie(store.get('movie.' + o.imdbID,null));
+//                         var color = (item.computed.size > 1 && item.computed.size < 2) ? 'green' : 'red';
 
-                        movie.omdb = o;
-                        movie.addRss(item);
+//                         // append magnet
+//                         magnet(o.imdbID,item.guid,item.link,color);
 
-                        if($('#'+o.imdbID).length == 0) {
-                            $('#rss').append(mapper(movie));
-                        }
+//                         // store
+//                         store.set('movie.' + o.imdbID, movie);
+//                     },
+//                     e => {
+//                         console.log('ERROR: ' + item.ptn.title + ' | ' + item.guid );
+//                     }
+//                 );
+//             }
+//         }
 
-                        var color = (item.computed.size > 1 && item.computed.size < 2) ? 'green' : 'red';
-
-                        // append magnet
-                        magnet(o.imdbID,item.guid,item.link,color);
-
-                        // store
-                        store.set('movie.' + o.imdbID, movie);
-                    },
-                    e => {
-                        console.log('ERROR: ' + item.ptn.title + ' | ' + item.guid );
-                    }
-                );
-            }
-        }
-
-        store.set('rss.items', items );
-    }
-});
-
-
+//         store.set('rss.items', items );
+//     }
+// });

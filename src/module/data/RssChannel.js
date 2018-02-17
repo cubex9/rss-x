@@ -6,8 +6,7 @@ const DApi = require('./DApi.js')
  * @type {RssChannel}
  */
 class RssChannel extends DApi {
-
-    constructor(serialized) {
+    constructor (serialized) {
         super(serialized)
 
         /**
@@ -20,47 +19,47 @@ class RssChannel extends DApi {
         /**
          * uri for dowload new items
          */
-        this.rssUri;
+        this.rssUri = null
 
         /**
          * html page of channel
          */
-        this.web;
+        this.web = null
 
         /**
          * last update, it is mean: when we read last time
          */
-        this.update;
+        this.update = null
 
         /**
          * channel name
          */
-        this.name;
+        this.name = null
 
         /**
          * search in channel rss provider
          */
-        this.search;
+        this.search = null
 
         /**
-         * reader
+         * resolver
          */
-        this.reader;
+        this.resolver = null
 
-        if( serialized != null ) {
-            this.id = serialized.id;
-            this.rssUri = serialized.rssUri;
-            this.web = serialized.web;
-            this.update = serialized.update;
-            this.name = serialized.name;
+        if (serialized != null) {
+            this.id = serialized.id
+            this.rssUri = serialized.rssUri
+            this.web = serialized.web
+            this.update = serialized.update
+            this.name = serialized.name
 
             /* plug-ins */
-            this.reader = serialized.reader;
-            this.search = serialized.search;
+            this.resolver = serialized.resolver
+            this.search = serialized.search
         }
     }
 
-    get type() {
+    get type () {
         return 'channel'
     }
 }

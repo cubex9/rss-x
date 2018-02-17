@@ -15,6 +15,12 @@ class Resolver {
         this.onError = onError
     }
 
+    events ({onInsertMovie, onInsertItem, onError}) {
+        this.onInsertMovie = onInsertMovie
+        this.onInsertItem = onInsertItem
+        this.onError = onError
+    }
+
     /**
      * Get the resolver name.
      */

@@ -1,8 +1,3 @@
-module.exports = function(item) {
-
-    if( /WEBRip|BDRip|DVDRip|WEB-DL/.test(item.title)) {
-        return true;
-    }
-
-    return false;
+module.exports = function (item) {
+    return /WEBRip|BDRip|DVDRip|WEB-DL/.test(item.title)
 }

@@ -1,12 +1,12 @@
 const DbApi = require('./api/db.js')
 const DB = require('nosql')
 
-const RssItem = require('./data/RssItem.js')
-const Movie = require('./data/Movie.js')
-
+/**
+ * Nosql driver
+ * @author kubasekA
+ */
 class NosqlDatabase extends DbApi {
-
-    constructor(conf) {
+    constructor (conf) {
         super()
 
         this.db = DB.load(conf.db.path)
@@ -15,13 +15,13 @@ class NosqlDatabase extends DbApi {
         this.db.view('movie').make((b) => {
             b.where('type', 'movie')
             b.sort('year')
-        });
+        })
 
         /* create item view */
         this.db.view('item').make((b) => {
             b.where('type', 'item')
             b.sort('year')
-        });
+        })
     }
 
     /**
@@ -34,7 +34,7 @@ class NosqlDatabase extends DbApi {
      *      })
      * </pre>
      */
-    get movie() {
+    get movie () {
         return this.db.find('movie')
     }
 
@@ -48,7 +48,7 @@ class NosqlDatabase extends DbApi {
      *      })
      * </pre>
      */
-    get item() {
+    get item () {
         return this.db.find('item')
     }
 
@@ -58,8 +58,8 @@ class NosqlDatabase extends DbApi {
      * @param movie
      * @param callback
      */
-    itemsOfMovie(movie,callback) {
-        return this.items.search('movie',movie.id).callback(callback)
+    itemsOfMovie (movie, callback) {
+        return this.items.search('movie', movie.id).callback(callback)
     }
 
     /**
@@ -67,12 +67,12 @@ class NosqlDatabase extends DbApi {
      *
      * @param item
      */
-    insertItem(i) {
+    insertItem (i) {
         // TODO: unigue
         this.db.insert(i)
     }
 
-    insertMovie(m) {
+    insertMovie (m) {
         // TODO: unique
         this.db.insert(m)
     }
@@ -83,20 +83,19 @@ class NosqlDatabase extends DbApi {
      * @param entry db entry which must have { type: '', id: }
      * @param data
      */
-    update( entry, data ) {
+    update (entry, data) {
+        this.db.update(data).make((b) => {
+            b.where('type', entry.type)
+            b.where('id', entry.id)
 
-        this.db.update(data).make( b => {
-
-            b.where('type', dapi.type)
-            b.where('id', dapi.id)
-
-            b.callback( (err,count) =>
-                console.log(`Entry ${dapi.id} was update by: ${JSON.stringify(data)}.`)
-            )
+            b.callback((err, count) => {
+                if (err) {
+                    console.log('Error: {}', err)
+                }
+                console.log('Entry {} was update by: {}', entry.id, JSON.stringify(data))
+            })
         })
     }
 }
 
 module.exports = NosqlDatabase
-
-

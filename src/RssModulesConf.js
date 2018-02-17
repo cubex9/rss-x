@@ -7,27 +7,27 @@ var Conf = require('conf')
  * @constructor
  */
 class RssModulesConf extends Conf {
-
-    constructor(opts) {
+    constructor (opts) {
         super(opts)
 
         /**
          * db initialization
          */
-        var Database = require(`./module/db-${get('db.module', 'nosql')}.js`)
+        const Database = require(`./module/${this.get('db.module', 'nosql')}`)
         this.databaseModule = new Database(opts)
 
         /**
          * files initialization
          */
-        var Files = require(`./module/files-${get('files.module','local')}.js`)
-        this.filesModule = new Files(opts);
+        const Files = require(`./module/${this.get('files.module', 'local')}`)
+        this.filesModule = new Files(opts)
 
         /**
          * omdb driver
          */
-        var OmdbDriver = require('./mocule/omdb-api.js')
-        this.omdb = new OmbdDriver(opts)
+        this.omdb = require('./module/omdb-api.js')
+
+        this.renderer = null
     }
 
     /**
@@ -35,8 +35,8 @@ class RssModulesConf extends Conf {
      *
      * @returns {string}
      */
-    get db() {
-        return this.databaseModule;
+    get db () {
+        return this.databaseModule
     }
 
     /**
@@ -44,8 +44,8 @@ class RssModulesConf extends Conf {
      *
      * @returns {string}
      */
-    get files() {
-        return this.filesModule;
+    get files () {
+        return this.filesModule
     }
 
     /**
@@ -53,15 +53,15 @@ class RssModulesConf extends Conf {
      *
      * @returns {OmbdDriver}
      */
-    get movies() {
-        return this.omdb;
+    get movies () {
+        return this.omdb
     }
 
     /**
      * get the subtitle service
      */
-    get subtitles() {
-        throw new Error("Not implemented yet.")
+    get subtitles () {
+        throw new Error('Not implemented yet.')
     }
 }
 

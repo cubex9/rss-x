@@ -1,7 +1,0 @@
-
-class ApiException {
-
-    constructor(message) {
-
-    }
-}

@@ -4,9 +4,9 @@ const url = require('url')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let win;
+let win
 
-function createWindow() {
+function createWindow () {
     // Create the browser window.
     win = new BrowserWindow({
         width: 1000,
@@ -15,7 +15,7 @@ function createWindow() {
     })
 
     // no menu
-    win.setMenu(null);
+    win.setMenu(null)
 
     // and load the index.html of the app.
     win.loadURL(url.format({

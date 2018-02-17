@@ -30,8 +30,7 @@ const ptn = require('parse-torrent-name')
  *
  */
 class PyrateBayItem extends RssItem {
-
-    constructor(serialized) {
+    constructor (serialized) {
         super(serialized)
 
         /* rss source */
@@ -44,7 +43,7 @@ class PyrateBayItem extends RssItem {
         this.csize = null
 
         /* guid of item */
-        this.guid = null;
+        this.guid = null
 
         if (serialized != null) {
             this.guid = serialized.guid
@@ -54,45 +53,44 @@ class PyrateBayItem extends RssItem {
         }
     }
 
-    static fromRss(val) {
-
+    static fromRss (val) {
         const i = new PyrateBayItem(null)
         i.rss = val
 
         /* http://thepiratebay.org/torrent/19755339/ */
-        i.guid = /^http.*\/(\d+)\/$/gi.exec(val.guid)[1];
+        i.guid = /^http.*\/(\d+)\/$/gi.exec(val.guid)[1]
         i.parsed = ptn(val.title)
         i.csize = 0
         i.magnet = val.link
 
-        return item
+        return i
     }
 
-    get id() {
+    get id () {
         return this.channel + '.' + this.guid
     }
 
-    get channel() {
+    get channel () {
         return 'pyratebay'
     }
 
-    get title() {
+    get title () {
         return this.parsed.title
     }
 
-    get year() {
+    get year () {
         return this.parsed.year
     }
 
-    get group() {
+    get group () {
         return this.parsed.group
     }
 
-    get link() {
+    get link () {
         return this.rss.link
     }
 
-    get size() {
+    get size () {
         return this.csize
     }
 }
