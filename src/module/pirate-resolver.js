@@ -20,4 +20,4 @@ class PirateResolver extends Resolver {
     }
 }
 
-module.export = PirateResolver
+module.exports = PirateResolver

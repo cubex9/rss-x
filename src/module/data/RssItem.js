@@ -19,7 +19,13 @@ class RssItem extends DApi {
         /* movie id */
         this.movie = null
 
+        /* the type of data object */
+        this.type = 'item'
+
+        this.guid = null
+
         if (serialized != null) {
+            this.guid = serialized.guid
             this.status = serialized.status
             this.movie = serialized.movie
             this.torrent = serialized.torrent
@@ -29,17 +35,6 @@ class RssItem extends DApi {
 
     get id () {
         throw Error('Id must be overriden')
-    }
-
-    get type () {
-        return 'item'
-    }
-
-    /**
-     * Source channel Id
-     */
-    get channel () {
-        throw Error('Channel muse be defined')
     }
 
     /**

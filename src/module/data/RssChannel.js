@@ -14,7 +14,12 @@ class RssChannel extends DApi {
          *
          * @type {null}
          */
-        this.id = null
+        this.channelId = null
+
+        /**
+         * type of entity is
+         */
+        this.type = 'channel'
 
         /**
          * uri for dowload new items
@@ -47,7 +52,7 @@ class RssChannel extends DApi {
         this.resolver = null
 
         if (serialized != null) {
-            this.id = serialized.id
+            this.channelId = serialized.channelId
             this.rssUri = serialized.rssUri
             this.web = serialized.web
             this.update = serialized.update
@@ -59,9 +64,9 @@ class RssChannel extends DApi {
         }
     }
 
-    get type () {
-        return 'channel'
+    get id () {
+        return this.channelId
     }
 }
 
-module.exporst = RssChannel
+module.exports = RssChannel

@@ -1,4 +1,4 @@
-module.export = function (summary) {
+module.exports = function (summary) {
     let size = 0
 
     var arr = / Size: ([\d.]+) (MB|GB) /gi.exec(summary)

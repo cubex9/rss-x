@@ -13,6 +13,9 @@ class EttvItem extends RssItem {
         /* computed size in GB */
         this.csize = null
 
+        /* owner channel */
+        this.channel = 'ettv'
+
         if (serialized != null) {
             this.rss = serialized.rss
             this.parsed = serialized.parsed
@@ -23,6 +26,7 @@ class EttvItem extends RssItem {
     static fromRss (val) {
         const i = new EttvItem(null)
         i.rss = val
+        i.guid = val.guid
 
         i.parsed = ptn(val.title)
         i.csize = rssSize(val.summary)
@@ -31,11 +35,7 @@ class EttvItem extends RssItem {
     }
 
     get id () {
-        return this.channel + '.' + this.rss.guid
-    }
-
-    get channel () {
-        return 'ettv'
+        return this.channel + '.' + this.guid
     }
 
     get title () {
@@ -59,4 +59,4 @@ class EttvItem extends RssItem {
     }
 }
 
-module.export = EttvItem
+module.exports = EttvItem

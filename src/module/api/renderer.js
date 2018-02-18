@@ -1,8 +1,9 @@
 'use strict'
 
-class Renderer {
-    constructor (container) {
-        this.container = container
+class Rndr {
+    constructor (cc) {
+        this.container = cc
+        console.log('renderer:', this.container)
     }
 
     add (movie) {
@@ -10,6 +11,10 @@ class Renderer {
 
     update (movie, item) {
     }
+
+    error (e) {
+        console.log('Error: {}', e)
+    }
 }
 
-module.export = Renderer
+module.exports = Rndr

@@ -54,4 +54,4 @@ class DatabaseApi {
     }
 }
 
-module.exports = DatabaseApi()
+module.exports = DatabaseApi

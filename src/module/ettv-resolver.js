@@ -20,7 +20,7 @@ class EttvResolver extends Resolver {
     }
 }
 
-module.export = EttvResolver
+module.exports = EttvResolver
 // /**
 //  *
 //  * @param ch channel

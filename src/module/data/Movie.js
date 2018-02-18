@@ -20,6 +20,9 @@ class Movie extends DApi {
         /* priority on start is default */
         this.priority = 0
 
+        /* type is in super */
+        this.type = 'movie'
+
         if (serialized != null) {
             this.origin = serialized.origin
             this.status = serialized.status
@@ -34,10 +37,6 @@ class Movie extends DApi {
      */
     static fromOmdb (data) {
         return new Movie({origin: data, status: 'new', priority: 0})
-    }
-
-    get type () {
-        return 'movie'
     }
 
     /**
@@ -59,6 +58,27 @@ class Movie extends DApi {
      */
     get year () {
         return this.origin.Year
+    }
+
+    /**
+     * @return plot
+     */
+    get plot () {
+        return this.origin.Plot
+    }
+
+    /**
+     * base rating
+     */
+    get ratting () {
+        return this.origin.imdbRatting
+    }
+
+    /**
+     * link to poster image
+     */
+    get poster () {
+        return this.origin.Poster
     }
 }
 

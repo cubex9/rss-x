@@ -1,4 +1,4 @@
-var Conf = require('conf')
+const Conf = require('conf')
 
 /**
  * Application configuration
@@ -13,14 +13,14 @@ class RssModulesConf extends Conf {
         /**
          * db initialization
          */
-        const Database = require(`./module/${this.get('db.module', 'nosql')}`)
+        const Database = require(`./module/${this.get('db.module', 'db-nosql.js')}`)
         this.databaseModule = new Database(opts)
 
         /**
          * files initialization
          */
-        const Files = require(`./module/${this.get('files.module', 'local')}`)
-        this.filesModule = new Files(opts)
+        // const Files = require(`./module/${this.get('files.module', 'files-local.js')}`)
+        this.filesModule = require(`./module/${this.get('files.module', 'files-local.js')}`)
 
         /**
          * omdb driver

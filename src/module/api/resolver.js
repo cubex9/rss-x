@@ -7,7 +7,7 @@ const Movie = require('./../data/Movie.js')
  * @author kubasekA
  */
 class Resolver {
-    constructor ({conf, onInsertMovie, onInsertItem, onError}) {
+    constructor ({ conf, onInsertMovie, onInsertItem, onError }) {
         this.conf = conf
 
         this.onInsertMovie = onInsertMovie
@@ -15,7 +15,7 @@ class Resolver {
         this.onError = onError
     }
 
-    events ({onInsertMovie, onInsertItem, onError}) {
+    events ({ onInsertMovie, onInsertItem, onError }) {
         this.onInsertMovie = onInsertMovie
         this.onInsertItem = onInsertItem
         this.onError = onError
@@ -52,30 +52,36 @@ class Resolver {
      */
     resolve (item) {
         /* new item */
+        console.log(item)
         var t = this.convert(item)
 
-        this.db.item.one('id', t.id).callback((e, r) => {
-            // when item is new, must be inserted into db
-            if (e) {
-                this.db.insertItem(t)
+        /* is in db ? */
+        this.db.item.make((b) => {
+            b.where('channel', t.channel)
+            b.where('guid', t.guid)
+            b.callback((e, r) => {
+                // when item is new, must be inserted into db
+                if (!e && r.length === 0) {
+                    this.db.insertItem(t)
 
-                // try check movie in db
-                this.db.movie.one((b) => {
-                    b.where('title', t.title)
-                    b.where('year', t.year)
+                    // try check movie in db
+                    this.db.movie.make((b) => {
+                        b.where('origin.Title', t.title)
+                        b.where('origin.Year', t.year)
 
-                    b.callback((e, r) => {
-                        /* yes, movie exist, set movie to item and update him */
-                        if (!e) {
-                            this.resolveExistMovie(t, r)
-                        } else {
-                            this.resolveNewMovie(t)
-                        }
+                        b.callback((e, r) => {
+                            /* yes, movie exist, set movie to item and update him */
+                            if (!e && r.length > 0) {
+                                this.resolveExistMovie(t, r[0])
+                            } else {
+                                this.resolveNewMovie(t)
+                            }
+                        })
                     })
-                })
-            } else {
-                console.log(e)
-            }
+                } else {
+                    console.log('the-same-item: %', e, r)
+                }
+            })
         })
     }
 
@@ -101,19 +107,15 @@ class Resolver {
      */
     resolveNewMovie (t) {
         /* movie does not exist, check him from omdb */
-        this.conf.movies.get(t, (e, r) => {
-            if (!e) {
-                const m = Movie.fromOmdb(r)
-                this.db.insertMovie(m)
+        this.conf.movies(t.title, t.year, (r) => {
+            const m = Movie.fromOmdb(r)
+            this.db.insertMovie(m)
 
-                t.movie = m.id
-                this.db.update(t, {movie: m.id})
+            t.movie = m.id
+            this.db.update(t, { movie: m.id })
 
-                this.onInsertMovie(m)
-                this.onInsertItem(m, t)
-            } else {
-                // TODO: make onError call -> unresolved item
-            }
+            this.onInsertMovie(m)
+            this.onInsertItem(m, t)
         })
     }
 }

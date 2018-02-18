@@ -29,7 +29,7 @@ const ptn = require('parse-torrent-name')
  * PyrateBay Rss item
  *
  */
-class PyrateBayItem extends RssItem {
+class PirateItem extends RssItem {
     constructor (serialized) {
         super(serialized)
 
@@ -42,8 +42,8 @@ class PyrateBayItem extends RssItem {
         /* computed size in GB */
         this.csize = null
 
-        /* guid of item */
-        this.guid = null
+        /* channel */
+        this.channel = 'pirate'
 
         if (serialized != null) {
             this.guid = serialized.guid
@@ -54,7 +54,7 @@ class PyrateBayItem extends RssItem {
     }
 
     static fromRss (val) {
-        const i = new PyrateBayItem(null)
+        const i = new PirateItem(null)
         i.rss = val
 
         /* http://thepiratebay.org/torrent/19755339/ */
@@ -68,10 +68,6 @@ class PyrateBayItem extends RssItem {
 
     get id () {
         return this.channel + '.' + this.guid
-    }
-
-    get channel () {
-        return 'pyratebay'
     }
 
     get title () {
@@ -95,4 +91,4 @@ class PyrateBayItem extends RssItem {
     }
 }
 
-module.exports = PyrateBayItem
+module.exports = PirateItem

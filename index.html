@@ -16,34 +16,62 @@
     <script type="text/javascript">
         window.$ = window.jQuery = require('jquery')
 
+        // resolvers
+        const Movie = require('./src/module/data/Movie.js')
+        const Reader = require('./src/module/api/reader.js')
+        const RssChannel = require('./src/module/data/RssChannel.js')
+        const PirateResolver = require('./src/module/pirate-resolver.js')
+        const EttvResolver = require('./src/module/ettv-resolver.js')
+
         // configuration
-        var Conf = require('./js/RssModulesConf.js')
+        var Conf = require('./src/RssModulesConf.js')
         const conf = new Conf();
+
+        // easy html renderer
+        const Renderer = require('./src/module/html-renderer.js')
+        conf.renderer = new Renderer('#rss')
+
+        // read movies from db
+        conf.db.movie.callback((err, r) => {
+            if (!err && r.lenght > 0) {
+                for (var i in r) {
+                    console.log('db:', r[i])
+                    conf.renderer.add(new Movie(r[i]))
+                }
+            }
+        })
+
+        // maping
+        const mapping = {
+            conf: conf,
+            onInsertMovie: (m) => conf.renderer.add(m),
+            onInsertItem: (m, i) => conf.renderer.update(m, i),
+            onError: (e) => conf.renderer.error(e)
+        }
 
         // add some channels
         const channels = [
             {
-                id: 1,
+                channelId: '1',
                 rssUri: 'https://thepiratebay.org/rss//top100/200',
                 web: 'https://thepiratebay.org',
                 name: 'pirate-bay',
-                resolver = new PirateBayResolver(conf)
+                resolver: new PirateResolver(mapping)
             },
             {
-                id: 2,
+                channelId: '2',
                 rssUri: 'https://www.ettv.tv/rss.php?cat=1,2,3,42,47,49',
                 web: 'https://www.ettv.tv',
                 name: 'ettv',
-                resolver = new EttvResolver(conf)
+                resolver: new EttvResolver(mapping)
             }
         ]
 
-        const Renderer = require('./src/module/html-renderer.js')
-        conf.renderer = new Renderer('#rss')
+        // go over chanel updates
+        for (var ch in channels) {
+            new Reader().read(new RssChannel(channels[0]))
+        }
 
-        channels.forEach((ch) => {
-            new RssChannerl(ch).update()
-        })
     </script>
 </body>
 
