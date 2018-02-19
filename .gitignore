@@ -2,6 +2,4 @@ node_modules
 .idea
 .vscode
 package-lock.json
-data
-data#item.nosql
-data#movie.nosql
+data.*

@@ -91,16 +91,17 @@ class NosqlDatabase extends DbApi {
      * @param entry db entry which must have { type: '', id: }
      * @param data
      */
-    update (entry, data) {
+    updateItem (e, data) {
         this.db.update(data).make((b) => {
-            b.where('type', entry.type)
-            b.where('id', entry.id)
+            b.where('type', e.type)
+            b.where('channel', e.channel)
+            b.where('guid', e.guid)
 
             b.callback((err, count) => {
                 if (err) {
                     console.log('Error: {}', err)
                 } else {
-                    console.log('Entry {} was update by: {}', entry.id, JSON.stringify(data))
+                    console.log('Entry {} was update by: {}', e.guid, JSON.stringify(data))
                 }
             })
         })

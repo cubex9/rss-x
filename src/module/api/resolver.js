@@ -7,12 +7,15 @@ const Movie = require('./../data/Movie.js')
  * @author kubasekA
  */
 class Resolver {
-    constructor ({ conf, onInsertMovie, onInsertItem, onError }) {
+    constructor ({conf, wac, onInsertMovie, onInsertItem, onError}) {
         this.conf = conf
 
         this.onInsertMovie = onInsertMovie
         this.onInsertItem = onInsertItem
         this.onError = onError
+
+        // want & catch module
+        this.wac = wac
     }
 
     events ({ onInsertMovie, onInsertItem, onError }) {
@@ -107,24 +110,23 @@ class Resolver {
         console.log('New movie:', t)
 
         /* movie does not exist, check him from omdb */
-        this.conf.movies(t.title, t.year, (r) => {
-            if (r.Response && r.imdbID !== 'undefined') {
+        // this.conf.movies(t.title, t.year, (r) => {
+        this.wac.want(t, (r) => {
+            if (r.Response === 'True' && r.imdbID !== 'undefined') {
                 const m = Movie.fromOmdb(r)
 
-                t.movie = m.id
-                this.db.update(t, { movie: m.id })
+                this.db.insertMovie(m)
+                this.onInsertMovie(m)
 
-                /* film vkladame pouze pokud opravdu v db nebyl */
-                this.db.movie.search('guid', m.id).callback((err, res) => {
-                    if (err) {
-                        console.log('movie search error:', err)
-                    } else if (res.length === 0) {
-                        this.db.insertMovie(m)
-                        this.onInsertMovie(m)
-                    }
-                    this.onInsertItem(m, t)
-                })
+                return m
+            } else {
+                return null
             }
+        },
+        (m) => {
+            t.movie = m.id
+            this.db.updateItem(t, t)
+            this.onInsertItem(m, t)
         })
     }
 }

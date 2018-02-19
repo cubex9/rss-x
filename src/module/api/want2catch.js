@@ -4,27 +4,19 @@
  * One Q object
 */
 class QData {
-    constructor () {
+    constructor (resolver) {
         this.calls = []
-        this.err = null
         this.result = null
+        this.resolver = resolver
     }
 
     /**
      * Add next object waiting for the same key
      * @param {} o data object
      */
-    add (o) {
-        this.calls.push(o)
+    add (f) {
+        this.calls.push(f)
         return this
-    }
-
-    /**
-     * results
-     */
-    result (err, result) {
-        this.err = err
-        this.result = result
     }
 
     hasResult () {
@@ -32,29 +24,49 @@ class QData {
     }
 
     call (f) {
-        return f(this.err, this.result)
+        if (this.result != null) {
+            return f(this.result)
+        }
+        return null
     }
+
+    resolve (result) {
+        this.result = this.resolver(result)
+    }
+
     /**
      * call callback over all dataz
-     * @param {*} callback method for mapping
      * @return array of results
      */
-    calls () {
-        const r = this.calls.map((f) => f(this.err, this.result))
-        this.calls = []
+    process () {
+        if (this.result != null) {
+            const r = this.calls.map((f) => f(this.result))
+            this.calls = []
 
-        return r
+            return r
+        }
+        return []
     }
 }
+
 /**
  * This is espetzial queue, you put what you want and
  * que callback you even one is catch.
- * @param callback method will be called when key is catch
+ * @param key get the key from object
+ * @param call method which will be called
  */
 class WantAndCatch {
     constructor (key, call) {
-        this.globlQ = {}
+        this.Q = new Map()
+
+        /**
+         * represents global call for data or something other
+         */
         this.call = call
+
+        /**
+         * key method
+         */
         this.key = key
     }
 
@@ -63,19 +75,21 @@ class WantAndCatch {
      * @param {*} key
      * @param callback ((val) => .. )
      */
-    want (t, callback) {
+    want (t, resolver, callback) {
         const key = this.key(t)
-        if (this.globalQ[key] == null) {
-            // first call, make QCall object and put first callback
-            this.globalQ[key] = new QData().add(callback)
+        const g = this.Q.get(key)
 
-            this.call(t, (e, r) => this.catch(key, e, r))
-        } else if (this.globalQ[key].hasResult()) {
+        if (g == null) {
+            // first call, make QCall object and put first callback
+            this.Q.set(key, new QData(resolver).add(callback))
+
+            this.call(t, (r) => this.catch(key, r))
+        } else if (g.hasResult()) {
             // call is down
-            this.globalQ[key].call(callback)
+            g.call(callback)
         } else {
             // call is in progress
-            this.globalQ[key].add(callback)
+            g.add(callback)
         }
     }
 
@@ -84,11 +98,11 @@ class WantAndCatch {
      * @param {*} key
      * @param {*} val
      */
-    catch (key, err, result) {
-        const g = this.globalQ[key]
+    catch (key, result) {
+        const g = this.Q.get(key)
         if (g != null) {
-            g.result(err, result)
-            g.callAndClean()
+            g.resolve(result)
+            g.process()
         } else {
             throw Error('No one call initilized')
         }

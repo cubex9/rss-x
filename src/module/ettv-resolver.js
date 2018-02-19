@@ -6,8 +6,8 @@ const EttvItem = require('./data/EttvItem.js')
  * @author kubasekA
  */
 class EttvResolver extends Resolver {
-    constructor ({conf, onInsertMovie, onInsertItem, onError}) {
-        super({conf, onInsertMovie, onInsertItem, onError})
+    constructor ({conf, wac, onInsertMovie, onInsertItem, onError}) {
+        super({conf, wac, onInsertMovie, onInsertItem, onError})
     }
 
     /**

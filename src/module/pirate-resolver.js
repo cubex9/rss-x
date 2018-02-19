@@ -6,8 +6,8 @@ const PirateItem = require('./data/PirateItem.js')
  * @author kubasekA
  */
 class PirateResolver extends Resolver {
-    constructor ({conf, onInsertMovie, onInsertItem, onError}) {
-        super({conf, onInsertMovie, onInsertItem, onError})
+    constructor ({conf, wac, onInsertMovie, onInsertItem, onError}) {
+        super({conf, wac, onInsertMovie, onInsertItem, onError})
     }
 
     /**

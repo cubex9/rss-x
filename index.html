@@ -23,6 +23,7 @@
         const RssChannel = require('./src/module/data/RssChannel.js')
         const PirateResolver = require('./src/module/pirate-resolver.js')
         const EttvResolver = require('./src/module/ettv-resolver.js')
+        const WantAndCath = require('./src/module/api/want2catch.js')
 
         // configuration
         var Conf = require('./src/RssModulesConf.js')
@@ -45,6 +46,7 @@
         // maping
         const mapping = {
             conf: conf,
+            wac: new WantAndCath((t) => t.title, conf.movies),
             onInsertMovie: (m) => conf.renderer.add(m),
             onInsertItem: (m, i) => conf.renderer.update(m, i),
             onError: (e) => conf.renderer.error(e)
