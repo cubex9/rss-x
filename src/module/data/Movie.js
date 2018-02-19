@@ -11,6 +11,8 @@ class Movie extends DApi {
     constructor (serialized) {
         super(serialized)
 
+        this.guid = null
+
         /* no origin on start */
         this.origin = null
 
@@ -24,6 +26,7 @@ class Movie extends DApi {
         this.type = 'movie'
 
         if (serialized != null) {
+            this.guid = serialized.guid
             this.origin = serialized.origin
             this.status = serialized.status
             this.priority = serialized.priority
@@ -36,14 +39,14 @@ class Movie extends DApi {
      * @returns {Movie}
      */
     static fromOmdb (data) {
-        return new Movie({origin: data, status: 'new', priority: 0})
+        return new Movie({guid: data.imdbID, origin: data, status: 'new', priority: 0})
     }
 
     /**
      * application own id
      */
     get id () {
-        return this.origin.imdbID
+        return this.guid
     }
 
     /**
@@ -60,6 +63,14 @@ class Movie extends DApi {
         return this.origin.Year
     }
 
+    get director () {
+        return this.origin.Director
+    }
+
+    get writer () {
+        return this.origin.Writer
+    }
+
     /**
      * @return plot
      */
@@ -71,7 +82,7 @@ class Movie extends DApi {
      * base rating
      */
     get ratting () {
-        return this.origin.imdbRatting
+        return this.origin.imdbRating
     }
 
     /**

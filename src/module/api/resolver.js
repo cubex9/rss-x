@@ -52,7 +52,6 @@ class Resolver {
      */
     resolve (item) {
         /* new item */
-        console.log(item)
         var t = this.convert(item)
 
         /* is in db ? */
@@ -63,6 +62,7 @@ class Resolver {
                 // when item is new, must be inserted into db
                 if (!e && r.length === 0) {
                     this.db.insertItem(t)
+                    console.log('new item:', t)
 
                     // try check movie in db
                     this.db.movie.make((b) => {
@@ -78,8 +78,6 @@ class Resolver {
                             }
                         })
                     })
-                } else {
-                    console.log('the-same-item: %', e, r)
                 }
             })
         })
@@ -92,7 +90,7 @@ class Resolver {
      * @param r result from db search
      */
     resolveExistMovie (t, r) {
-        const m = Movie.fromJson(r)
+        const m = new Movie(r)
         t.movie = m.id
 
         this.db.update(t, { movie: m.id })
@@ -106,16 +104,27 @@ class Resolver {
      * @param t item
      */
     resolveNewMovie (t) {
+        console.log('New movie:', t)
+
         /* movie does not exist, check him from omdb */
         this.conf.movies(t.title, t.year, (r) => {
-            const m = Movie.fromOmdb(r)
-            this.db.insertMovie(m)
+            if (r.Response && r.imdbID !== 'undefined') {
+                const m = Movie.fromOmdb(r)
 
-            t.movie = m.id
-            this.db.update(t, { movie: m.id })
+                t.movie = m.id
+                this.db.update(t, { movie: m.id })
 
-            this.onInsertMovie(m)
-            this.onInsertItem(m, t)
+                /* film vkladame pouze pokud opravdu v db nebyl */
+                this.db.movie.search('guid', m.id).callback((err, res) => {
+                    if (err) {
+                        console.log('movie search error:', err)
+                    } else if (res.length === 0) {
+                        this.db.insertMovie(m)
+                        this.onInsertMovie(m)
+                    }
+                    this.onInsertItem(m, t)
+                })
+            }
         })
     }
 }

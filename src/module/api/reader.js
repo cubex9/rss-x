@@ -9,20 +9,13 @@ const request = require('request')
  */
 class Reader {
     read (channel) {
-        // pirates: https://thepiratebay.org/rss//top100/200
-        // https://thepiratebay.org/rss//top100/500
-        console.log('Start feed: ' + channel.rssUri)
+        console.log('read-feed: ' + channel.rssUri)
 
         const req = request(channel.rssUri)
         const feedparser = new FeedParser()
 
-        // req.on('error', (error) => {
-        //     // handle any request errors
-        // })
-
+        req.on('error', (error) => console.log('Request error:', error))
         req.on('response', (res) => {
-            // var stream = this // `this` is `req`, which is a stream
-
             if (res.statusCode !== 200) {
                 req.emit('error', new Error('Bad status code'))
             } else {
@@ -30,18 +23,16 @@ class Reader {
             }
         })
 
-        // feedparser.on('error', (error) => {
-        //     // always handle errors
-        // })
-
+        feedparser.on('error', (error) => console.log('Feed error:', error))
         feedparser.on('readable', () => {
-            // This is where the action is!
             var i
 
             while ((i = feedparser.read())) {
                 channel.resolver.resolve(i)
             }
         })
+
+        return 0
     }
 }
 

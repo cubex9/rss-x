@@ -17,6 +17,7 @@
         window.$ = window.jQuery = require('jquery')
 
         // resolvers
+        const De = require('./src/module/data/Convertors.js')
         const Movie = require('./src/module/data/Movie.js')
         const Reader = require('./src/module/api/reader.js')
         const RssChannel = require('./src/module/data/RssChannel.js')
@@ -32,14 +33,14 @@
         conf.renderer = new Renderer('#rss')
 
         // read movies from db
-        conf.db.movie.callback((err, r) => {
-            if (!err && r.lenght > 0) {
-                for (var i in r) {
-                    console.log('db:', r[i])
-                    conf.renderer.add(new Movie(r[i]))
-                }
-            }
-        })
+        conf.db.movie.make((b) => b.callback((err, r) => {
+            console.log('DB-READ:', r)
+            r.map((m) => {
+                const movie = De.deserialize(m)
+                conf.renderer.add(movie)
+                conf.db.itemsOfMovie(movie, (i) => conf.renderer.update(movie,i))
+            })
+        }))
 
         // maping
         const mapping = {
@@ -55,7 +56,7 @@
                 channelId: '1',
                 rssUri: 'https://thepiratebay.org/rss//top100/200',
                 web: 'https://thepiratebay.org',
-                name: 'pirate-bay',
+                name: 'pirate',
                 resolver: new PirateResolver(mapping)
             },
             {
@@ -68,9 +69,7 @@
         ]
 
         // go over chanel updates
-        for (var ch in channels) {
-            new Reader().read(new RssChannel(channels[0]))
-        }
+        channels.map((ch) => new Reader().read(new RssChannel(ch)))
 
     </script>
 </body>

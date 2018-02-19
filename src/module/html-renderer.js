@@ -1,6 +1,8 @@
 'use strict'
 
 const Rndr = require('./api/renderer.js')
+const magnetron = require('./magnet-link.js')
+const toropa = require('parse-torrent')
 
 class HtmlRndr extends Rndr {
     constructor (cc) {
@@ -10,9 +12,9 @@ class HtmlRndr extends Rndr {
     }
 
     add (m) {
-        console.log('Render ->', this.container, m)
-        window.$(this.container).append(
-            `<div class="movie-item" id="${m.id}">
+        if (window.$('#' + m.id).length === 0) {
+            window.$(this.container).append(
+                `<div class="movie-item" id="${m.id}">
                 <div class="movie-poster">
                     <img src="${m.poster}" width="160pt" border="8pt solid black" />
                 </div> 
@@ -26,10 +28,19 @@ class HtmlRndr extends Rndr {
                     <div class="movie-ratting-imdb">${m.ratting}</div>
                 </div>
             </div>`
-        )
+            )
+        }
     }
 
     update (m, i) {
+        magnetron(i.link, (p) => {
+            window.$('#' + m.id + ' .movie-downloads').append(`
+                <a href="${toropa.toMagnetURI(p)}" class="movie-link" id="${i.id}">
+                    <img src="pic/download.png" width="24pt" />
+                </a>
+            `)
+        })
+        // window.$('#' + itemId).css('background-color', color)
     }
 
     error (e) {

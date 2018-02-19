@@ -1,6 +1,8 @@
 const DbApi = require('./api/db.js')
 const DB = require('nosql')
 
+const Deser = require('./data/Convertors.js')
+
 /**
  * Nosql driver
  * @author kubasekA
@@ -59,8 +61,13 @@ class NosqlDatabase extends DbApi {
      * @param movie
      * @param callback
      */
-    itemsOfMovie (movie, callback) {
-        return this.items.search('movie', movie.id).callback(callback)
+    itemsOfMovie (movie, maper) {
+        console.log('items of:', movie)
+        return this.item.search('movie', movie.id).callback((err, r) => {
+            if (!err) {
+                r.map((i) => maper(Deser.deserialize(i)))
+            }
+        })
     }
 
     /**
@@ -92,8 +99,9 @@ class NosqlDatabase extends DbApi {
             b.callback((err, count) => {
                 if (err) {
                     console.log('Error: {}', err)
+                } else {
+                    console.log('Entry {} was update by: {}', entry.id, JSON.stringify(data))
                 }
-                console.log('Entry {} was update by: {}', entry.id, JSON.stringify(data))
             })
         })
     }

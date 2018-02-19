@@ -22,6 +22,7 @@ class RssItem extends DApi {
         /* the type of data object */
         this.type = 'item'
 
+        /* id in channel */
         this.guid = null
 
         if (serialized != null) {
