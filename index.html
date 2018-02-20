@@ -26,7 +26,7 @@
         const WantAndCath = require('./src/module/api/want2catch.js')
 
         // configuration
-        var Conf = require('./src/RssModulesConf.js')
+        var Conf = require('./src/RssXConf.js')
         const conf = new Conf();
 
         // easy html renderer
@@ -35,7 +35,7 @@
 
         // read movies from db
         conf.db.movie.make((b) => b.callback((err, r) => {
-            console.log('DB-READ:', r)
+            console.log('DB-READER-MOVIES-IN-DB: ', r.lenght)
             r.map((m) => {
                 const movie = De.deserialize(m)
                 conf.renderer.add(movie)

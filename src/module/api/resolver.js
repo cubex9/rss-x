@@ -118,6 +118,8 @@ class Resolver {
                 this.db.insertMovie(m)
                 this.onInsertMovie(m)
 
+                console.log('New movie: ', m)
+
                 return m
             } else {
                 return null

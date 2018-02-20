@@ -62,7 +62,6 @@ class NosqlDatabase extends DbApi {
      * @param callback
      */
     itemsOfMovie (movie, maper) {
-        console.log('items of:', movie)
         return this.item.search('movie', movie.id).callback((err, r) => {
             if (!err) {
                 r.map((i) => maper(Deser.deserialize(i)))
