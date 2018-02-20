@@ -12,7 +12,7 @@ class NosqlDatabase extends DbApi {
         super()
 
         // this.db = DB.load(conf.db.path)
-        this.db = DB.load('./data.nosql')
+        this.db = DB.load('./.data/rss.nosql')
 
         /* create movie view */
         this.db.view('movie').make((b) => {
