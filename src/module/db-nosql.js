@@ -98,9 +98,9 @@ class NosqlDatabase extends DbApi {
 
             b.callback((err, count) => {
                 if (err) {
-                    console.log('Error: {}', err)
+                    console.log('Update Error guid: %s => ', e.guid, err)
                 } else {
-                    console.log('Entry {} was update by: {}', e.guid, JSON.stringify(data))
+                    console.log('Entry %s was updated', e.guid)
                 }
             })
         })

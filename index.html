@@ -25,6 +25,8 @@
         const EttvResolver = require('./src/module/ettv-resolver.js')
         const WantAndCath = require('./src/module/api/want2catch.js')
 
+        const MagnetInfo = require('./src/module/magnet-tracker.js')
+
         // configuration
         var Conf = require('./src/RssXConf.js')
         const conf = new Conf();
@@ -32,6 +34,8 @@
         // easy html renderer
         const Renderer = require('./src/module/html-renderer.js')
         conf.renderer = new Renderer('#rss')
+
+        const mgi = new MagnetInfo(conf).infoof('nic',(e,r) => console.log(r))
 
         // read movies from db
         conf.db.movie.make((b) => b.callback((err, r) => {
