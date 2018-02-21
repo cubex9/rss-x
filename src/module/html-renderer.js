@@ -1,14 +1,14 @@
 'use strict'
 
+const toropa = require('parse-torrent')
+
 const Rndr = require('./api/renderer.js')
 const magnetron = require('./magnet-link.js')
-const toropa = require('parse-torrent')
 
 class HtmlRndr extends Rndr {
     constructor (cc) {
         super(cc)
         this.container = cc
-        console.log('renderer:', this.container)
     }
 
     add (m) {
@@ -41,9 +41,6 @@ class HtmlRndr extends Rndr {
             `)
         })
         // window.$('#' + itemId).css('background-color', color)
-    }
-
-    error (e) {
     }
 }
 

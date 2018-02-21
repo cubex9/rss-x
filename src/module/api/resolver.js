@@ -108,7 +108,7 @@ class Resolver {
      * @param t item
      */
     resolveNewMovie (t) {
-        logger.info('want new movie: {}', t.title)
+        logger.info('want new movie for: %s, title: %s', t.guid, t.title)
 
         /* movie does not exist, check him from omdb */
         // this.conf.movies(t.title, t.year, (r) => {
@@ -119,7 +119,7 @@ class Resolver {
                 this.db.insertMovie(m)
                 this.onInsertMovie(m)
 
-                logger('new movie: {}', m.title)
+                logger.info('found new movie: %s', m.title)
 
                 return m
             } else {

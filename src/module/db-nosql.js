@@ -1,3 +1,6 @@
+'use strict'
+const logger = require('@log4js-node/log4js-api').getLogger('rssx')
+
 const DbApi = require('./api/db.js')
 const DB = require('nosql')
 
@@ -32,7 +35,7 @@ class NosqlDatabase extends DbApi {
      * <pre>
      *      db.movie.search('id',1).callback((err,res) => {
      *          if( !err) {
-     *              console.log(res)
+     *              logger.error(res)
      *          }
      *      })
      * </pre>
@@ -46,7 +49,7 @@ class NosqlDatabase extends DbApi {
      * <pre>
      *      db.item.search('id',1).callback((err,res) => {
      *          if( !err) {
-     *              console.log(res)
+     *              logger.error(res)
      *          }
      *      })
      * </pre>
@@ -98,9 +101,9 @@ class NosqlDatabase extends DbApi {
 
             b.callback((err, count) => {
                 if (err) {
-                    console.log('Update Error guid: %s => ', e.guid, err)
+                    logger.error('Update Error guid: {} => {}', e.guid, err)
                 } else {
-                    console.log('Entry %s was updated', e.guid)
+                    logger.info('Entry {} was updated', e.guid)
                 }
             })
         })

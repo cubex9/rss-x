@@ -4,7 +4,7 @@ const dotte = require('dot-prop')
 /**
  * Filter make colors: green, yellow, orange, red.
  * Green is best, red is worst
- * @param ser serialized filter
+ * @param {object} ser serialized filter
  */
 class SizeFilter extends DApi {
     constructor (ser) {

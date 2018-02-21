@@ -1,5 +1,7 @@
 'use strict'
 
+const logger = require('@log4js-node/log4js-api').getLogger('rssx')
+
 const FeedParser = require('feedparser')
 const request = require('request')
 
@@ -9,12 +11,12 @@ const request = require('request')
  */
 class Reader {
     read (channel) {
-        console.log('read-feed: ' + channel.rssUri)
+        logger.info('read-feed: ' + channel.rssUri)
 
         const req = request(channel.rssUri)
         const feedparser = new FeedParser()
 
-        req.on('error', (error) => console.log('Request error:', error))
+        req.on('error', (error) => logger.warn('Request error:', error))
         req.on('response', (res) => {
             if (res.statusCode !== 200) {
                 req.emit('error', new Error('Bad status code'))
@@ -23,7 +25,7 @@ class Reader {
             }
         })
 
-        feedparser.on('error', (error) => console.log('Feed error:', error))
+        feedparser.on('error', (error) => logger.warn('Feed error:', error))
         feedparser.on('readable', () => {
             var i
 

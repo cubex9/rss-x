@@ -1,3 +1,7 @@
+'use strict'
+
+const logger = require('@log4js-node/log4js-api').getLogger('rssx')
+
 const Movie = require('./Movie.js')
 const EttvItem = require('./EttvItem.js')
 const PirateItem = require('./PirateItem.js')
@@ -16,6 +20,7 @@ class Convertors {
             } else if (i.type === 'channel') {
                 return new Channel(i)
             }
+            logger.error('Convertor unknown type: {}', i.type)
         }
         return null
     }
@@ -26,6 +31,7 @@ class Convertors {
         } else if (i.channel === 'pirate') {
             return new PirateItem(i)
         }
+        logger.error('Item convertor unknown channel: {}', i.channel)
         return null
     }
 }

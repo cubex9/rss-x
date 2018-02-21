@@ -1,5 +1,7 @@
 'use strict'
 
+const logger = require('@log4js-node/log4js-api').getLogger('rssx')
+
 class Rndr {
     constructor (cc) {
         this.container = cc
@@ -12,7 +14,7 @@ class Rndr {
     }
 
     error (e) {
-        console.log('Error: {}', e)
+        logger.error('Error: {}', e)
     }
 }
 
