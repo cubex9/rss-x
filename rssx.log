@@ -2932,3 +2932,171 @@
     at decodeTorrentFile (C:\Users\kubasek\Documents\code\rss-x\node_modules\parse-torrent-file\index.js:17:23)
     at parseTorrent (C:\Users\kubasek\Documents\code\rss-x\node_modules\parse-torrent\index.js:32:12)
     at parseOrThrow (C:\Users\kubasek\Documents\code\rss-x\node_modules\parse-torrent\index.js:90:23)
+[2018-02-21T22:07:49.365] [INFO] rssx - read-feed: https://thepiratebay.org/rss//top100/200
+[2018-02-21T22:07:49.802] [INFO] rssx - read-feed: https://www.ettv.tv/rss.php?cat=1,2,3,42,47,49
+[2018-02-21T22:07:50.040] [INFO] rssx - DB-READER-MOVIES-{}-FROM-DB 167
+[2018-02-21T22:07:51.673] [INFO] rssx - new item: {} 75309
+[2018-02-21T22:07:51.674] [INFO] rssx - new item: {} 75299
+[2018-02-21T22:07:51.674] [INFO] rssx - new item: {} 75298
+[2018-02-21T22:07:51.674] [INFO] rssx - new item: {} 75296
+[2018-02-21T22:07:51.675] [INFO] rssx - new item: {} 75291
+[2018-02-21T22:07:51.675] [INFO] rssx - new item: {} 75289
+[2018-02-21T22:07:51.676] [INFO] rssx - new item: {} 75283
+[2018-02-21T22:07:51.676] [INFO] rssx - new item: {} 75280
+[2018-02-21T22:07:51.677] [INFO] rssx - new item: {} 75269
+[2018-02-21T22:07:51.679] [INFO] rssx - new item: {} 75268
+[2018-02-21T22:07:51.679] [INFO] rssx - new item: {} 75266
+[2018-02-21T22:07:51.762] [INFO] rssx - want new movie for: 75309, title: The Bachelors
+[2018-02-21T22:07:51.766] [INFO] rssx - want new movie for: 75299, title: Thor: Ragnarok
+[2018-02-21T22:07:51.767] [INFO] rssx - want new movie for: 75298, title: The Bachelors
+[2018-02-21T22:07:51.767] [INFO] rssx - want new movie for: 75296, title: Unhinged
+[2018-02-21T22:07:51.767] [INFO] rssx - want new movie for: 75291, title: Stegman Is Dead.
+[2018-02-21T22:07:51.768] [INFO] rssx - want new movie for: 75289, title: Forgotten
+[2018-02-21T22:07:51.769] [INFO] rssx - want new movie for: 75283, title: Stegman Is Dead.
+[2018-02-21T22:07:51.769] [INFO] rssx - want new movie for: 75280, title: Mal Nosso
+[2018-02-21T22:07:51.770] [INFO] rssx - want new movie for: 75269, title: The Girl Without Hands
+[2018-02-21T22:07:51.771] [INFO] rssx - want new movie for: 75268, title: The Girl Without Hands
+[2018-02-21T22:07:51.771] [INFO] rssx - want new movie for: 75266, title: The Girl Without Hands
+[2018-02-21T22:07:52.316] [INFO] rssx - found new movie: Thor: Ragnarok
+[2018-02-21T22:07:52.320] [INFO] rssx - found new movie: The Girl Without Hands
+[2018-02-21T22:07:52.439] [INFO] rssx - found new movie: Forgotten
+[2018-02-21T22:07:52.746] [INFO] rssx - found new movie: Unhinged
+[2018-02-21T22:07:53.134] [INFO] rssx - Entry {} was updated 75299
+[2018-02-21T22:07:53.134] [INFO] rssx - Entry {} was updated 75269
+[2018-02-21T22:07:53.134] [INFO] rssx - Entry {} was updated 75268
+[2018-02-21T22:07:53.135] [INFO] rssx - Entry {} was updated 75266
+[2018-02-21T22:07:53.136] [INFO] rssx - Entry {} was updated 75289
+[2018-02-21T22:07:53.137] [INFO] rssx - Entry {} was updated 75296
+[2018-02-21T22:08:20.887] [ERROR] rssx - Cannot make magnetico {} Error: Error downloading torrent: Request timed out
+    at C:\Users\kubasek\Documents\code\rss-x\node_modules\parse-torrent\index.js:73:26
+    at C:\Users\kubasek\Documents\code\rss-x\node_modules\simple-get\index.js:73:21
+    at f (C:\Users\kubasek\Documents\code\rss-x\node_modules\once\once.js:25:25)
+    at ClientRequest.<anonymous> (C:\Users\kubasek\Documents\code\rss-x\node_modules\simple-get\index.js:61:5)
+    at emitNone (events.js:86:13)
+    at ClientRequest.emit (events.js:188:7)
+    at Socket.emitRequestTimeout (_http_client.js:614:42)
+    at Object.onceWrapper (events.js:293:19)
+    at emitNone (events.js:86:13)
+    at Socket.emit (events.js:188:7)
+[2018-02-21T22:08:20.898] [ERROR] rssx - Cannot make magnetico {} Error: Error downloading torrent: Request timed out
+    at C:\Users\kubasek\Documents\code\rss-x\node_modules\parse-torrent\index.js:73:26
+    at C:\Users\kubasek\Documents\code\rss-x\node_modules\simple-get\index.js:73:21
+    at f (C:\Users\kubasek\Documents\code\rss-x\node_modules\once\once.js:25:25)
+    at ClientRequest.<anonymous> (C:\Users\kubasek\Documents\code\rss-x\node_modules\simple-get\index.js:61:5)
+    at emitNone (events.js:86:13)
+    at ClientRequest.emit (events.js:188:7)
+    at Socket.emitRequestTimeout (_http_client.js:614:42)
+    at Object.onceWrapper (events.js:293:19)
+    at emitNone (events.js:86:13)
+    at Socket.emit (events.js:188:7)
+[2018-02-21T22:08:20.900] [ERROR] rssx - Cannot make magnetico {} Error: Error downloading torrent: Request timed out
+    at C:\Users\kubasek\Documents\code\rss-x\node_modules\parse-torrent\index.js:73:26
+    at C:\Users\kubasek\Documents\code\rss-x\node_modules\simple-get\index.js:73:21
+    at f (C:\Users\kubasek\Documents\code\rss-x\node_modules\once\once.js:25:25)
+    at ClientRequest.<anonymous> (C:\Users\kubasek\Documents\code\rss-x\node_modules\simple-get\index.js:61:5)
+    at emitNone (events.js:86:13)
+    at ClientRequest.emit (events.js:188:7)
+    at Socket.emitRequestTimeout (_http_client.js:614:42)
+    at Object.onceWrapper (events.js:293:19)
+    at emitNone (events.js:86:13)
+    at Socket.emit (events.js:188:7)
+[2018-02-21T22:08:20.900] [ERROR] rssx - Cannot make magnetico {} Error: Error downloading torrent: Request timed out
+    at C:\Users\kubasek\Documents\code\rss-x\node_modules\parse-torrent\index.js:73:26
+    at C:\Users\kubasek\Documents\code\rss-x\node_modules\simple-get\index.js:73:21
+    at f (C:\Users\kubasek\Documents\code\rss-x\node_modules\once\once.js:25:25)
+    at ClientRequest.<anonymous> (C:\Users\kubasek\Documents\code\rss-x\node_modules\simple-get\index.js:61:5)
+    at emitNone (events.js:86:13)
+    at ClientRequest.emit (events.js:188:7)
+    at Socket.emitRequestTimeout (_http_client.js:614:42)
+    at Object.onceWrapper (events.js:293:19)
+    at emitNone (events.js:86:13)
+    at Socket.emit (events.js:188:7)
+[2018-02-21T22:08:20.901] [ERROR] rssx - Cannot make magnetico {} Error: Error downloading torrent: Request timed out
+    at C:\Users\kubasek\Documents\code\rss-x\node_modules\parse-torrent\index.js:73:26
+    at C:\Users\kubasek\Documents\code\rss-x\node_modules\simple-get\index.js:73:21
+    at f (C:\Users\kubasek\Documents\code\rss-x\node_modules\once\once.js:25:25)
+    at ClientRequest.<anonymous> (C:\Users\kubasek\Documents\code\rss-x\node_modules\simple-get\index.js:61:5)
+    at emitNone (events.js:86:13)
+    at ClientRequest.emit (events.js:188:7)
+    at Socket.emitRequestTimeout (_http_client.js:614:42)
+    at Object.onceWrapper (events.js:293:19)
+    at emitNone (events.js:86:13)
+    at Socket.emit (events.js:188:7)
+[2018-02-21T22:08:20.902] [ERROR] rssx - Cannot make magnetico {} Error: Error downloading torrent: Request timed out
+    at C:\Users\kubasek\Documents\code\rss-x\node_modules\parse-torrent\index.js:73:26
+    at C:\Users\kubasek\Documents\code\rss-x\node_modules\simple-get\index.js:73:21
+    at f (C:\Users\kubasek\Documents\code\rss-x\node_modules\once\once.js:25:25)
+    at ClientRequest.<anonymous> (C:\Users\kubasek\Documents\code\rss-x\node_modules\simple-get\index.js:61:5)
+    at emitNone (events.js:86:13)
+    at ClientRequest.emit (events.js:188:7)
+    at Socket.emitRequestTimeout (_http_client.js:614:42)
+    at Object.onceWrapper (events.js:293:19)
+    at emitNone (events.js:86:13)
+    at Socket.emit (events.js:188:7)
+[2018-02-21T22:08:20.903] [ERROR] rssx - Cannot make magnetico {} Error: Error downloading torrent: Request timed out
+    at C:\Users\kubasek\Documents\code\rss-x\node_modules\parse-torrent\index.js:73:26
+    at C:\Users\kubasek\Documents\code\rss-x\node_modules\simple-get\index.js:73:21
+    at f (C:\Users\kubasek\Documents\code\rss-x\node_modules\once\once.js:25:25)
+    at ClientRequest.<anonymous> (C:\Users\kubasek\Documents\code\rss-x\node_modules\simple-get\index.js:61:5)
+    at emitNone (events.js:86:13)
+    at ClientRequest.emit (events.js:188:7)
+    at Socket.emitRequestTimeout (_http_client.js:614:42)
+    at Object.onceWrapper (events.js:293:19)
+    at emitNone (events.js:86:13)
+    at Socket.emit (events.js:188:7)
+[2018-02-21T22:08:20.922] [ERROR] rssx - Cannot make magnetico {} Error: Error downloading torrent: Request timed out
+    at C:\Users\kubasek\Documents\code\rss-x\node_modules\parse-torrent\index.js:73:26
+    at C:\Users\kubasek\Documents\code\rss-x\node_modules\simple-get\index.js:73:21
+    at f (C:\Users\kubasek\Documents\code\rss-x\node_modules\once\once.js:25:25)
+    at ClientRequest.<anonymous> (C:\Users\kubasek\Documents\code\rss-x\node_modules\simple-get\index.js:61:5)
+    at emitNone (events.js:86:13)
+    at ClientRequest.emit (events.js:188:7)
+    at Socket.emitRequestTimeout (_http_client.js:614:42)
+    at Object.onceWrapper (events.js:293:19)
+    at emitNone (events.js:86:13)
+    at Socket.emit (events.js:188:7)
+[2018-02-21T22:08:20.924] [ERROR] rssx - Cannot make magnetico {} Error: Error downloading torrent: Request timed out
+    at C:\Users\kubasek\Documents\code\rss-x\node_modules\parse-torrent\index.js:73:26
+    at C:\Users\kubasek\Documents\code\rss-x\node_modules\simple-get\index.js:73:21
+    at f (C:\Users\kubasek\Documents\code\rss-x\node_modules\once\once.js:25:25)
+    at ClientRequest.<anonymous> (C:\Users\kubasek\Documents\code\rss-x\node_modules\simple-get\index.js:61:5)
+    at emitNone (events.js:86:13)
+    at ClientRequest.emit (events.js:188:7)
+    at Socket.emitRequestTimeout (_http_client.js:614:42)
+    at Object.onceWrapper (events.js:293:19)
+    at emitNone (events.js:86:13)
+    at Socket.emit (events.js:188:7)
+[2018-02-21T22:08:21.145] [ERROR] rssx - Cannot make magnetico {} Error: Invalid data: Missing delimiter ":" [0x3a]
+    at Function.decode.find (C:\Users\kubasek\Documents\code\rss-x\node_modules\bencode\lib\decode.js:112:9)
+    at Function.decode.buffer (C:\Users\kubasek\Documents\code\rss-x\node_modules\bencode\lib\decode.js:157:20)
+    at Function.decode.next (C:\Users\kubasek\Documents\code\rss-x\node_modules\bencode\lib\decode.js:98:21)
+    at Function.decode.list (C:\Users\kubasek\Documents\code\rss-x\node_modules\bencode\lib\decode.js:139:21)
+    at Function.decode.next (C:\Users\kubasek\Documents\code\rss-x\node_modules\bencode\lib\decode.js:94:21)
+    at Function.decode.dictionary (C:\Users\kubasek\Documents\code\rss-x\node_modules\bencode\lib\decode.js:125:36)
+    at Function.decode.next (C:\Users\kubasek\Documents\code\rss-x\node_modules\bencode\lib\decode.js:92:21)
+    at Function.decode.list (C:\Users\kubasek\Documents\code\rss-x\node_modules\bencode\lib\decode.js:139:21)
+    at Function.decode.next (C:\Users\kubasek\Documents\code\rss-x\node_modules\bencode\lib\decode.js:94:21)
+    at Function.decode.dictionary (C:\Users\kubasek\Documents\code\rss-x\node_modules\bencode\lib\decode.js:125:36)
+    at Function.decode.next (C:\Users\kubasek\Documents\code\rss-x\node_modules\bencode\lib\decode.js:92:21)
+[2018-02-21T22:08:21.494] [ERROR] rssx - Cannot make magnetico {} Error: Invalid data: Missing delimiter ":" [0x3a]
+    at Function.decode.find (C:\Users\kubasek\Documents\code\rss-x\node_modules\bencode\lib\decode.js:112:9)
+    at Function.decode.buffer (C:\Users\kubasek\Documents\code\rss-x\node_modules\bencode\lib\decode.js:157:20)
+    at Function.decode.dictionary (C:\Users\kubasek\Documents\code\rss-x\node_modules\bencode\lib\decode.js:125:17)
+    at Function.decode.next (C:\Users\kubasek\Documents\code\rss-x\node_modules\bencode\lib\decode.js:92:21)
+    at Function.decode.dictionary (C:\Users\kubasek\Documents\code\rss-x\node_modules\bencode\lib\decode.js:125:36)
+    at Function.decode.next (C:\Users\kubasek\Documents\code\rss-x\node_modules\bencode\lib\decode.js:92:21)
+    at Object.decode (C:\Users\kubasek\Documents\code\rss-x\node_modules\bencode\lib\decode.js:81:17)
+    at decodeTorrentFile (C:\Users\kubasek\Documents\code\rss-x\node_modules\parse-torrent-file\index.js:17:23)
+    at parseTorrent (C:\Users\kubasek\Documents\code\rss-x\node_modules\parse-torrent\index.js:32:12)
+    at parseOrThrow (C:\Users\kubasek\Documents\code\rss-x\node_modules\parse-torrent\index.js:90:23)
+[2018-02-21T22:08:21.512] [ERROR] rssx - Cannot make magnetico {} Error: Invalid data: Missing delimiter ":" [0x3a]
+    at Function.decode.find (C:\Users\kubasek\Documents\code\rss-x\node_modules\bencode\lib\decode.js:112:9)
+    at Function.decode.buffer (C:\Users\kubasek\Documents\code\rss-x\node_modules\bencode\lib\decode.js:157:20)
+    at Function.decode.dictionary (C:\Users\kubasek\Documents\code\rss-x\node_modules\bencode\lib\decode.js:125:17)
+    at Function.decode.next (C:\Users\kubasek\Documents\code\rss-x\node_modules\bencode\lib\decode.js:92:21)
+    at Function.decode.dictionary (C:\Users\kubasek\Documents\code\rss-x\node_modules\bencode\lib\decode.js:125:36)
+    at Function.decode.next (C:\Users\kubasek\Documents\code\rss-x\node_modules\bencode\lib\decode.js:92:21)
+    at Object.decode (C:\Users\kubasek\Documents\code\rss-x\node_modules\bencode\lib\decode.js:81:17)
+    at decodeTorrentFile (C:\Users\kubasek\Documents\code\rss-x\node_modules\parse-torrent-file\index.js:17:23)
+    at parseTorrent (C:\Users\kubasek\Documents\code\rss-x\node_modules\parse-torrent\index.js:32:12)
+    at parseOrThrow (C:\Users\kubasek\Documents\code\rss-x\node_modules\parse-torrent\index.js:90:23)

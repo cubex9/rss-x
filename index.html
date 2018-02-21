@@ -17,7 +17,10 @@
         window.$ = window.jQuery = require('jquery')
 
         // run application
-        require('./src/module/index.js').run()
+        const rssx = require('./src/module/index.js').run()
+        
+        // feed all configured channels
+        rssx.channels().map(rssx.feed)
 
     </script>
 </body>

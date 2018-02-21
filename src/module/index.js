@@ -8,7 +8,7 @@ const RssChannel = require('./data/RssChannel.js')
 const PirateResolver = require('./pirate-resolver.js')
 const EttvResolver = require('./ettv-resolver.js')
 const WantAndCath = require('./api/want2catch.js')
-const MagnetInfo = require('./magnet-tracker.js')
+// const MagnetInfo = require('./magnet-tracker.js')
 const Renderer = require('./html-renderer.js')
 
 // static constants
@@ -39,7 +39,7 @@ module.exports = {
         // easy html renderer
         __conf.renderer = new Renderer('#rss')
 
-        new MagnetInfo(__conf).infoof('nic', (e, r) => console.log(r))
+        // new MagnetInfo(__conf).infoof('nic', (e, r) => console.log(r))
 
         // read movies from db
         __conf.db.movie.make((b) => b.callback((err, r) => {
@@ -55,6 +55,10 @@ module.exports = {
             }
         }))
 
+        return this
+    },
+
+    channels: function () {
         // maping
         const mapping = {
             conf: __conf,
@@ -64,30 +68,22 @@ module.exports = {
             onError: (e) => __conf.renderer.error(e)
         }
 
-        // add some channels
-        const channels = [
-            {
-                channelId: '1',
-                rssUri: 'https://thepiratebay.org/rss//top100/200',
-                web: 'https://thepiratebay.org',
-                name: 'pirate',
-                resolver: new PirateResolver(mapping)
-            },
-            {
-                channelId: '2',
-                rssUri: 'https://www.ettv.tv/rss.php?cat=1,2,3,42,47,49',
-                web: 'https://www.ettv.tv',
-                name: 'ettv',
-                resolver: new EttvResolver(mapping)
+        return __channels.map(c => {
+            if (c.type === 'ettv') {
+                c.resolver = new EttvResolver(mapping)
+            } else if (c.type === 'pirate') {
+                c.resolver = new PirateResolver(mapping)
             }
-        ]
+            return c
+        })
+    },
 
-        // go over chanel updates
-        channels.map((ch) => new Reader().read(new RssChannel(ch)))
+    feed: function (channel) {
+        new Reader().read(new RssChannel(channel))
+
+        return this
     },
-    channels: function () {
-        return __channels
-    },
+
     conf: function () {
         return __conf
     }

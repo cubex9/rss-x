@@ -1,6 +1,6 @@
 'use strict'
 
-const logger = require('@log4js-node/log4js-api').getLogger('rssx')
+// const logger = require('@log4js-node/log4js-api').getLogger('rssx')
 const Domo = require('./Domo')
 
 /**
