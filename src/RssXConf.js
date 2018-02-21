@@ -1,4 +1,8 @@
 const Conf = require('conf')
+const log4js = require('log4js')
+
+// const logger = log4js.getLogger('rssx')
+// logger.info('App configuration was loader')
 
 /**
  * Application configuration
@@ -9,6 +13,11 @@ const Conf = require('conf')
 class RssModulesConf extends Conf {
     constructor (opts) {
         super(opts)
+        /**
+         * for information, on start check the path
+         */
+        console.log('CONF: ', this.path)
+        log4js.configure(this.get('log4js'))
 
         /**
          * db initialization
@@ -60,7 +69,7 @@ class RssModulesConf extends Conf {
     /**
      * get the subtitle service
      */
-    get subtitles () {
+    get subtitle () {
         throw new Error('Not implemented yet.')
     }
 }

@@ -39,7 +39,7 @@
 
         // read movies from db
         conf.db.movie.make((b) => b.callback((err, r) => {
-            console.log('DB-READER-MOVIES-IN-DB: ', r.lenght)
+            console.log('DB-READER-MOVIES-IN-DB: ', r.length)
             r.map((m) => {
                 const movie = De.deserialize(m)
                 conf.renderer.add(movie)

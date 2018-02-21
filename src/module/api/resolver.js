@@ -1,5 +1,6 @@
 'use strict'
 
+const logger = require('@log4js-node/log4js-api').getLogger('rssx')
 const Movie = require('./../data/Movie.js')
 /**
  * ResolverApi is general item/movie resolving module api.
@@ -65,7 +66,7 @@ class Resolver {
                 // when item is new, must be inserted into db
                 if (!e && r.length === 0) {
                     this.db.insertItem(t)
-                    console.log('new item:', t)
+                    logger.info('new item: {}', t.guid)
 
                     // try check movie in db
                     this.db.movie.make((b) => {
@@ -107,7 +108,7 @@ class Resolver {
      * @param t item
      */
     resolveNewMovie (t) {
-        console.log('New movie:', t)
+        logger.info('want new movie: {}', t.title)
 
         /* movie does not exist, check him from omdb */
         // this.conf.movies(t.title, t.year, (r) => {
@@ -118,7 +119,7 @@ class Resolver {
                 this.db.insertMovie(m)
                 this.onInsertMovie(m)
 
-                console.log('New movie: ', m)
+                logger('new movie: {}', m.title)
 
                 return m
             } else {

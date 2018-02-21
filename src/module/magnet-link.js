@@ -1,3 +1,4 @@
+const logger = require('@log4js-node/log4js-api').getLogger('rssx')
 const toropa = require('parse-torrent')
 
 module.exports = function (link, callback) {
@@ -5,7 +6,7 @@ module.exports = function (link, callback) {
     if (/^http.*/.test(link)) {
         toropa.remote(link, (e, p) => {
             if (e) {
-                console.log('Cannot make magnetico', e)
+                logger.error('Cannot make magnetico {}', e)
             } else {
                 callback(p)
             }

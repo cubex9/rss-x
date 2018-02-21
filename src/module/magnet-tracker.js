@@ -64,7 +64,7 @@ class MagnetTracker {
                 console.log('TorroError: ', err)
             } else {
                 console.log('Nodes: ', this.dht.toJSON().nodes)
-                this.dht.abort()
+                this.dht.destroy()
             }
         })
     }
