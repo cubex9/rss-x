@@ -1,11 +1,11 @@
-const DApi = require('./DApi.js')
+const Domo = require('./Domo.js')
 
 /**
  * rss channel description
  *
  * @type {RssChannel}
  */
-class RssChannel extends DApi {
+class RssChannel extends Domo {
     constructor (serialized) {
         super(serialized)
 

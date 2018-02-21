@@ -1,4 +1,4 @@
-const DApi = require('./DApi.js')
+const Domo = require('./Domo.js')
 
 /**
  * clone constructor, where movie is deserialized JSON of Movie
@@ -7,7 +7,7 @@ const DApi = require('./DApi.js')
  * @returns {*|boolean}
  * @constructor
  */
-class Movie extends DApi {
+class Movie extends Domo {
     constructor (serialized) {
         super(serialized)
 

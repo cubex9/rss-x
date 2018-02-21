@@ -2,7 +2,7 @@
  * Genereral Db Api of application,
  * database must be synchronized.
  *
- * All data entries must implement DApi
+ * All data entries must implement Domo
  *
  * @author kubasekA
  */

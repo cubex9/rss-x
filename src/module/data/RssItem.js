@@ -1,10 +1,10 @@
-const DApi = require('./DApi.js')
+const Domo = require('./Domo.js')
 
 /**
  * Define RssItem api.
  *
  */
-class RssItem extends DApi {
+class RssItem extends Domo {
     constructor (serialized) {
         super(serialized)
 
@@ -25,12 +25,22 @@ class RssItem extends DApi {
         /* id in channel */
         this.guid = null
 
+        /**
+         * Any item has collor, collors give filter set,
+         * must be recompute after filters change.
+         * On start has grey collor as unresolved
+         */
+        this.color = 'grey'
+
         if (serialized != null) {
             this.guid = serialized.guid
             this.status = serialized.status
             this.movie = serialized.movie
             this.torrent = serialized.torrent
             this.magnet = serialized.magnet
+            if (serialized.color != null) {
+                this.color = serialized.color
+            }
         }
     }
 

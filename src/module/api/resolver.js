@@ -2,6 +2,7 @@
 
 const logger = require('@log4js-node/log4js-api').getLogger('rssx')
 const Movie = require('./../data/Movie.js')
+const Filters = require('./data/')
 /**
  * ResolverApi is general item/movie resolving module api.
  *
@@ -85,6 +86,17 @@ class Resolver {
                 }
             })
         })
+    }
+
+    /**
+     * Work around the item to movie rendered
+     * @param {Movie} m item is link to this
+     * @param {RssItem} t item to insert
+     */
+    resolveInsertItem (m, t) {
+        t.color = 
+        this.onInsertItem(m, t)
+
     }
 
     /**

@@ -1,4 +1,4 @@
-const DApi = require('./DApi.js')
+const Domo = require('./Domo.js')
 const dotte = require('dot-prop')
 
 /**
@@ -6,7 +6,7 @@ const dotte = require('dot-prop')
  * Green is best, red is worst
  * @param {object} ser serialized filter
  */
-class SizeFilter extends DApi {
+class SizeFilter extends Domo {
     constructor (ser) {
         super(ser)
 
