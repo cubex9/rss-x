@@ -1,8 +1,8 @@
 {
-  "name": "rss-x",
+  "name": "ilomo",
   "version": "0.1.0",
   "main": "main.js",
-  "description": "robotic film downloader by rss and torrent",
+  "description": "ilomo mean: I love movies",
   "private": true,
   "repository": {
     "type": "git",
